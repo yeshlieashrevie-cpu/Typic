@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Custom Typography Tees — Made to Order</title>
+<meta name="description" content="Pick a design, make it yours, we print and ship. Custom typography DTF shirts, Philippines.">
+<meta name="theme-color" content="#FFF8E7">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Anton&family=Bebas+Neue&family=Playfair+Display:ital,wght@1,800;0,700&family=Caveat:wght@600;700&family=Archivo+Black&family=Space+Grotesk:wght@600;700&family=Unbounded:wght@700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ===== LOADER ===== -->
+<div id="loader" class="loader" aria-hidden="true">
+  <div class="loader-mark">
+    <svg viewBox="0 0 100 100" class="loader-ring">
+      <circle cx="50" cy="50" r="42" class="loader-ring-track"></circle>
+      <circle cx="50" cy="50" r="42" class="loader-ring-fill"></circle>
+    </svg>
+    <span class="loader-glyph"TYPIC</span>
+  </div>
+  <p class="loader-text">Threading the pixels…</p>
+</div>
+
+<!-- ===== TOP BAR ===== -->
+<header class="topbar">
+  <button class="brand" type="button" data-action="go-home" aria-label="Back to home">
+    <span class="brand-mark"><!-- drop your TYPIC wordart PNG (transparent bg) in this folder, name it logo.png --></span>
+  </button>
+
+  <div class="progress" id="progress" hidden>
+    <button class="progress-back" id="backBtn" type="button" aria-label="Go back">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 5L8 12L15 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="progress-body">
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+      <span class="progress-label" id="progressLabel">Step 1 of 5 · Build your shirt</span>
+    </div>
+  </div>
+</header>
+
+<main id="app">
+
+  <!-- ===================================================== -->
+  <!-- SCREEN 0 — HOME -->
+  <!-- ===================================================== -->
+  <section class="screen active" data-screen="home">
+    <div class="bento home-bento">
+
+      <div class="cell cell--hero">
+<div class="hero-media">
+  <video class="hero-video" autoplay muted loop playsinline preload="metadata">
+    <source src="hero.mp4" type="video/mp4">
+    <video autoplay muted loop playsinline>
+  </video>
+  
+  <!-- Your existing hero content goes here -->
+</div>
+        <div class="hero-copy">
+          <p class="eyebrow">Custom typography tees</p>
+          <h1 class="hero-title">A word worth wearing</h1>
+          <p class="hero-sub">Pick a typography design, add your own name or word, and we'll print it fresh on a shirt made for you. Nothing sits on a shelf until you order it.</p>
+          <button class="btn btn--primary btn--lg" data-action="start" type="button">
+            Start designing
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <p class="section-heading">Four Steps Lang!</p>
+
+      <div class="cell cell--mini swatch-card swatch-card--dark">
+        <p class="swatch-code">01</p>
+        <p class="swatch-label">Choose your shirt</p>
+      </div>
+      <div class="cell cell--mini swatch-card swatch-card--cream">
+        <p class="swatch-code">02</p>
+        <p class="swatch-label">Pick up to 3 designs</p>
+      </div>
+      <div class="cell cell--mini swatch-card swatch-card--sangria">
+        <p class="swatch-code">03</p>
+        <p class="swatch-label">Make it yours</p>
+      </div>
+      <div class="cell cell--mini swatch-card swatch-card--cornflower">
+        <p class="swatch-code">04</p>
+        <p class="swatch-label">We print &amp; ship</p>
+      </div>
+
+      <div class="cell cell--wide fabric-teaser">
+        <div class="pricing-content">
+          <p class="eyebrow">Bundle &amp; save</p>
+          <p class="pricing-headline">The more the Merrier!</p>
+          <p class="pricing-sub">More shirt means more savings, here's how it goes:</p>
+          <ul class="pricing-tiers">
+            <li><span>1st shirt</span><span>₱399</span></li>
+            <li><span>2nd shirt</span><span>₱349</span></li>
+            <li><span>3rd shirt and so on!...</span><span>₱299</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <button class="btn btn--primary btn--lg btn--block cell--full" data-action="start" type="button">
+        Start designing
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+
+    </div>
+  </section>
+
+  <!-- ===================================================== -->
+  <!-- SCREEN 1 — BUILD YOUR SHIRT -->
+  <!-- ===================================================== -->
+  <section class="screen" data-screen="build">
+    <div class="screen-head">
+      <h2 class="screen-title">Build your shirt</h2>
+      <p class="screen-sub">This is the shirt every design in your order gets printed on.</p>
+    </div>
+
+    <div class="bento build-bento">
+
+      <div class="cell cell--full">
+        <p class="field-label">Size</p>
+        <div class="chip-row" id="sizeChips" role="group" aria-label="Choose a size">
+          <button class="chip" type="button" data-size="S">S</button>
+          <button class="chip" type="button" data-size="M">M</button>
+          <button class="chip" type="button" data-size="L">L</button>
+          <button class="chip" type="button" data-size="XL">XL</button>
+          <button class="chip" type="button" data-size="2XL">2XL</button>
+        </div>
+        <p class="field-hint">Unisex adult sizing, S through 2XL.</p>
+      </div>
+
+      <div class="cell cell--full">
+        <p class="field-label">Shirt colour</p>
+        <div class="color-pick" id="colorPick" role="group" aria-label="Choose a shirt colour">
+          <button class="swatch-card swatch-card--cream swatch-card--pick" type="button" data-color="white">
+            <span class="pick-check" aria-hidden="true"></span>
+            <p class="swatch-code">#FFFFFF</p>
+            <p class="swatch-label">White</p>
+          </button>
+          <button class="swatch-card swatch-card--dark swatch-card--pick" type="button" data-color="black">
+            <span class="pick-check" aria-hidden="true"></span>
+            <p class="swatch-code">#171310</p>
+            <p class="swatch-label">Black</p>
+          </button>
+        </div>
+      </div>
+
+      <div class="cell cell--full fabric-card">
+        <p class="field-label">What it's made of</p>
+        <div class="fabric-grid">
+          <div class="fabric-stat"><span class="fabric-stat-num">80%</span><span class="fabric-stat-label">Cotton</span></div>
+          <div class="fabric-stat"><span class="fabric-stat-num">20%</span><span class="fabric-stat-label">Polyester</span></div>
+          <div class="fabric-stat"><span class="fabric-stat-num">240</span><span class="fabric-stat-label">GSM weight</span></div>
+        </div>
+        <p class="field-hint">A sturdy mid-weight blend, built to take a DTF print without cracking or fading fast.</p>
+      </div>
+
+    </div>
+
+    <div class="screen-footer">
+      <button class="btn btn--primary btn--lg btn--block" id="continueBuildBtn" type="button" disabled>Choose your designs</button>
+    </div>
+  </section>
+
+  <!-- ===================================================== -->
+  <!-- SCREEN 2 — DESIGN LIBRARY -->
+  <!-- ===================================================== -->
+  <section class="screen" data-screen="library">
+    <div class="screen-head screen-head--tight">
+      <h2 class="screen-title">Pick your designs</h2>
+      <p class="screen-sub">Tap a design to add it to your order — pick as many as you like.</p>
+    </div>
+
+    <div class="ticker" aria-hidden="true">
+      <div class="ticker-track">
+        <span class="ticker-item">20 new typography art every week!</span>
+        <span class="ticker-item">20 new typography art every week!</span>
+        <span class="ticker-item">20 new typography art every week!</span>
+        <span class="ticker-item">20 new typography art every week!</span>
+        <span class="ticker-item">20 new typography art every week!</span>
+        <span class="ticker-item">20 new typography art every week!</span>
+      </div>
+    </div>
+
+    <div class="mode-toggle" id="modeToggle" role="group" aria-label="Browse designs for">
+      <button class="mode-btn" type="button" data-mode="white">White shirt</button>
+      <button class="mode-btn" type="button" data-mode="black">Black shirt</button>
+    </div>
+
+    <div class="library-grid" id="libraryGrid" aria-live="polite"></div>
+
+    <div class="cart-dock" id="cartDock">
+      <div class="cart-strip" id="cartStrip"></div>
+      <button class="btn btn--primary cart-cta" id="reviewBtn" type="button" disabled>
+        <span id="cartCtaLabel">Review your picks</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </section>
+
+  <!-- ===================================================== -->
+  <!-- SCREEN 3 — REVIEW & SHIPPING -->
+  <!-- ===================================================== -->
+  <section class="screen" data-screen="review">
+    <div class="screen-head screen-head--tight">
+      <h2 class="screen-title">Review &amp; ship</h2>
+      <button class="recap-chip" id="recapChip" type="button" data-action="edit-build">
+        <span id="recapText">M · Black · 240GSM</span>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M12 20h9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M16.5 3.5a2.12 2.12 0 013 3L7 19l-4 1 1-4L16.5 3.5z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+
+    <div class="carousel cell" id="carousel">
+      <button class="carousel-nav carousel-nav--prev" id="prevBtn" type="button" aria-label="Previous design">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M15 5L8 12L15 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+
+      <div class="carousel-stage" id="carouselStage"></div>
+
+      <button class="carousel-nav carousel-nav--next" id="nextBtn" type="button" aria-label="Next design">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 5L16 12L9 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+    <div class="carousel-dots" id="carouselDots"></div>
+
+    <div class="bento review-bento">
+      <div class="cell cell--full">
+        <p class="field-label">Order summary</p>
+        <div id="summaryList" class="summary-list"></div>
+        <div class="summary-row summary-row--total">
+          <span>Subtotal</span>
+          <span id="subtotalAmt">₱0</span>
+        </div>
+      </div>
+
+      <div class="cell cell--full">
+        <div class="rush-row">
+          <div>
+            <p class="field-label" style="margin-bottom:2px">Delivery speed</p>
+            <p class="field-hint" style="margin:0">Choose a courier, or switch on rush.</p>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="rushToggle">
+            <span class="switch-track"><span class="switch-thumb"></span></span>
+          </label>
+        </div>
+        <div class="ship-options" id="shipOptions">
+          <label class="ship-card" data-courier="jnt">
+            <input type="radio" name="shipping" value="jnt" checked>
+            <span class="ship-card-top">
+              <span class="ship-courier">J&amp;T Express</span>
+              <span class="ship-rate" id="jntRate">₱120</span>
+            </span>
+            <span class="ship-eta" id="jntEta">Standard · 2–3 days</span>
+          </label>
+          <label class="ship-card" data-courier="lalamove">
+            <input type="radio" name="shipping" value="lalamove">
+            <span class="ship-card-top">
+              <span class="ship-courier">Lalamove</span>
+              <span class="ship-rate" id="lalamoveRate">₱280</span>
+            </span>
+            <span class="ship-eta" id="lalamoveEta">Rush · same day, Metro Manila</span>
+          </label>
+        </div>
+        <p class="field-hint" id="rateNote">Rates shown are estimates. Final rate is confirmed at your delivery address.</p>
+      </div>
+
+      <div class="cell cell--full total-card">
+        <span>Total due on confirmation</span>
+        <span id="totalAmt">₱0</span>
+      </div>
+    </div>
+
+    <div class="screen-footer">
+      <button class="btn btn--primary btn--lg btn--block" id="continueReviewBtn" type="button" disabled>Continue to your details</button>
+    </div>
+  </section>
+
+  <!-- ===================================================== -->
+  <!-- SCREEN 4 — YOUR DETAILS -->
+  <!-- ===================================================== -->
+  <section class="screen" data-screen="details">
+    <div class="screen-head">
+      <h2 class="screen-title">Your details</h2>
+      <p class="screen-sub">So we know where to send your shirt, and where to send your preview.</p>
+    </div>
+
+    <form class="bento details-bento" id="detailsForm" novalidate>
+
+      <div class="cell cell--half">
+        <label class="field-label" for="firstName">First name</label>
+        <input class="input" type="text" id="firstName" name="firstName" required autocomplete="given-name">
+      </div>
+      <div class="cell cell--half">
+        <label class="field-label" for="lastName">Last name</label>
+        <input class="input" type="text" id="lastName" name="lastName" required autocomplete="family-name">
+      </div>
+
+      <div class="cell cell--half">
+        <label class="field-label" for="phone">Phone number</label>
+        <input class="input" type="tel" id="phone" name="phone" placeholder="09xx xxx xxxx" required autocomplete="tel">
+      </div>
+      <div class="cell cell--half">
+        <label class="field-label" for="email">Email</label>
+        <input class="input" type="email" id="email" name="email" placeholder="you@email.com" required autocomplete="email">
+      </div>
+
+      <div class="cell cell--full">
+        <label class="field-label" for="messenger">Messenger name or link <span class="optional-tag">Optional</span></label>
+        <input class="input" type="text" id="messenger" name="messenger" placeholder="e.g. m.me/yourname" autocomplete="off">
+        <p class="field-hint">Optional — but adding it means a faster heads-up the moment your final design photos are ready.</p>
+      </div>
+
+      <div class="cell cell--full">
+        <p class="field-label" style="margin-bottom:0">Delivery address</p>
+        <p class="field-hint" style="margin-top:2px">We added this — your courier needs it to get your shirt to you.</p>
+      </div>
+
+      <div class="cell cell--full">
+        <label class="field-label" for="addrStreet">House / unit, street, building</label>
+        <input class="input" type="text" id="addrStreet" name="addrStreet" required autocomplete="address-line1">
+      </div>
+      <div class="cell cell--half">
+        <label class="field-label" for="addrBarangay">Barangay</label>
+        <input class="input" type="text" id="addrBarangay" name="addrBarangay" required autocomplete="address-line2">
+      </div>
+      <div class="cell cell--half">
+        <label class="field-label" for="addrCity">City / municipality</label>
+        <input class="input" type="text" id="addrCity" name="addrCity" required autocomplete="address-level2">
+      </div>
+      <div class="cell cell--half">
+        <label class="field-label" for="addrProvince">Province</label>
+        <input class="input" type="text" id="addrProvince" name="addrProvince" required autocomplete="address-level1">
+      </div>
+      <div class="cell cell--half">
+        <label class="field-label" for="addrZip">ZIP code</label>
+        <input class="input" type="text" id="addrZip" name="addrZip" inputmode="numeric" required autocomplete="postal-code">
+      </div>
+
+      <div class="cell cell--full">
+        <button class="btn btn--primary btn--lg btn--block" type="submit" id="submitOrderBtn">Place my order</button>
+        <p class="field-hint form-error" id="formError" role="alert"></p>
+      </div>
+    </form>
+  </section>
+
+  <!-- ===================================================== -->
+  <!-- SCREEN 5 — CONFIRMED -->
+  <!-- ===================================================== -->
+  <section class="screen" data-screen="done">
+    <div class="done-card cell">
+      <div class="done-check">
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <p class="eyebrow">Order received</p>
+      <h2 class="done-title">Thanks, <span id="doneName">friend</span>.</h2>
+      <p class="done-order-id" id="doneOrderId">Order #—</p>
+      <p class="done-copy">
+        Check your email<span id="doneMessengerCopy"></span> within the next few hours — we'll send a preview of your design first.
+        Once your shirt is printed and ready, we'll message you again with photos of the real thing before it ships.
+      </p>
+      <div class="done-summary" id="doneSummary"></div>
+      <button class="btn btn--secondary btn--lg" data-action="go-feedback" type="button">Continue</button>
+    </div>
+  </section>
+
+  <!-- ===================================================== -->
+  <!-- SCREEN 6 — BY THE WAY (feedback + updates) -->
+  <!-- ===================================================== -->
+  <section class="screen" data-screen="feedback">
+    <div class="screen-head">
+      <h2 class="screen-title">By the way…</h2>
+    </div>
+
+    <div class="feedback-box">
+      <div class="feedback-media"></div>
+      <div class="feedback-content">
+        <p class="pricing-headline">Help us get better</p>
+        <p class="pricing-sub">We're still in our first phase — your feedback means a lot. Tell us what's working, what's not, or what you'd love to see.</p>
+        <textarea class="input feedback-input" id="feedbackInput" rows="3" placeholder="Your thoughts..."></textarea>
+        <button class="btn btn--primary" id="feedbackSubmit" type="button">Send feedback</button>
+        <p class="field-hint" id="feedbackStatus"></p>
+      </div>
+    </div>
+
+    <div class="feedback-box">
+      <div class="feedback-media feedback-media--alt"></div>
+      <div class="feedback-content">
+        <p class="pricing-headline">More customization is coming</p>
+        <p class="pricing-sub">More customization will be here soon! Want first dibs? Leave your email and we'll keep you posted.</p>
+        <input class="input feedback-input" type="email" id="updatesEmail" placeholder="you@email.com">
+        <button class="btn btn--primary" id="updatesSubmit" type="button">Notify me</button>
+        <p class="field-hint" id="updatesStatus"></p>
+      </div>
+    </div>
+
+    <div class="screen-footer">
+      <button class="btn btn--secondary btn--lg btn--block" id="restartBtn" type="button">Start a new order</button>
+    </div>
+  </section>
+
+</main>
+
+<!-- ===== PERSONALIZE SHEET ===== -->
+<div class="sheet-backdrop" id="sheetBackdrop" hidden></div>
+<div class="sheet" id="personalizeSheet" hidden role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
+  <div class="sheet-handle"></div>
+  <p class="sheet-title" id="sheetTitle">Make it yours</p>
+  <p class="field-hint" id="sheetSub">Add a name or word to print on this design — totally optional.</p>
+  <div class="sheet-preview" id="sheetPreview"></div>
+  <input class="input" type="text" id="personalizeInput" placeholder="e.g. Bianca, Maya &amp; Leo, 07.19" maxlength="24">
+  <div class="sheet-actions">
+    <button class="btn btn--ghost" id="sheetSkip" type="button">Leave as is</button>
+    <button class="btn btn--primary" id="sheetConfirm" type="button">Add to my picks</button>
+  </div>
+</div>
+
+<!-- ===== ADDED-TO-PICKS POPUP (shows once, first add only) ===== -->
+<div class="add-popup" id="addPopup" hidden role="status" aria-live="polite">
+  <button class="add-popup-close" id="addPopupClose" type="button" aria-label="Close">×</button>
+  <p class="add-popup-title">Added to my picks!</p>
+  <p class="add-popup-sub">It's waiting for you in the tray below.</p>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+<script src="script.js" defer></script>
+</body>
+</html>
