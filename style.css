@@ -631,7 +631,7 @@ img{ max-width:100%; display:block; }
 .feedback-input{
   width:100%; margin-bottom: 12px; resize: vertical;
   border: 1.5px solid transparent; border-radius: var(--r-sm);
-  background: linear-gradient(var(--near-black), var(--near-black)) padding-box, var(--gradient-pink) border-box;
+  background: linear-gradient(var(--near-black), var(--near-black)) padding-box, var(--gradient-pink) border-box; color:#fff;
 }
 
 /* =========================================================
