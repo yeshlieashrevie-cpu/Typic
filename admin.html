@@ -247,9 +247,8 @@
   checkSession();
 </script>
 
-<!-- Floating Notification Button -->
-<button onclick="subscribeToNotifications()" style="position: fixed; bottom: 25px; right: 25px; z-index: 999999; padding: 14px 22px; font-size: 15px; background-color: #28a745; color: #ffffff; border: none; border-radius: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.4); cursor: pointer; font-weight: bold;">
-  🔔 Enable Notifications
+<button onclick="window.OneSignalDeferred = window.OneSignalDeferred || []; OneSignalDeferred.push(async function(OneSignal) { await OneSignal.User.PushSubscription.optIn(); alert('Notification Subscription Triggered!'); });" style="position: fixed; bottom: 25px; right: 25px; z-index: 999999; padding: 14px 22px; font-size: 15px; background-color: #28a745; color: #ffffff; border: none; border-radius: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.4); cursor: pointer; font-weight: bold;">
+  🔔 Enable Order Notifications
 </button>
 
 </body>
