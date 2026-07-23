@@ -969,6 +969,16 @@ async function submitOrder(payload) {
     console.info('[demo mode — Supabase not configured] order payload:', payload);
     return { ok: true, demo: true };
   }
+  
+  // 1. Save order to Supabase
+  const { data, error } = await supabaseClient.from('orders').insert([payload]);
+  if (error) throw error;
+
+async function submitOrder(payload) {
+  if (!supabaseClient) {
+    console.info('[demo mode — Supabase not configured] order payload:', payload);
+    return { ok: true, demo: true };
+  }
   const { data, error } = await supabaseClient.from('orders').insert([payload]);
   if (error) throw error;
   return { ok: true, data };
