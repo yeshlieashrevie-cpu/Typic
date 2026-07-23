@@ -247,12 +247,10 @@
   checkSession();
 </script>
 
-<!-- Place this right above </body> -->
-<div style="text-align: center; margin: 20px;">
-  <button onclick="subscribeToNotifications()" style="padding: 12px 24px; font-size: 16px; background-color: #28a745; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold;">
-    🔔 Enable Order Notifications
-  </button>
-</div>
+<!-- Floating Notification Button -->
+<button onclick="subscribeToNotifications()" style="position: fixed; bottom: 25px; right: 25px; z-index: 999999; padding: 14px 22px; font-size: 15px; background-color: #28a745; color: #ffffff; border: none; border-radius: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.4); cursor: pointer; font-weight: bold;">
+  🔔 Enable Notifications
+</button>
 
 </body>
 </html>
