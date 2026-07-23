@@ -9,16 +9,20 @@
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#000000">
 
-<!-- OneSignal Push Notifications -->
-<script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.sw.js" defer></script>
-<script>
-  window.OneSignalDeferred = window.OneSignalDeferred || [];
-  OneSignalDeferred.push(async function(OneSignal) {
-    await OneSignal.init({
-      appId: "3e4733c8-34bd-46ac-8d96-84e7ba37d9fb",
+<head>
+  <!-- 1. OneSignal SDK Script -->
+  <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.sw.js" defer></script>
+  
+  <!-- 2. OneSignal Initialization -->
+  <script>
+    window.OneSignalDeferred = window.OneSignalDeferred || [];
+    OneSignalDeferred.push(async function(OneSignal) {
+      await OneSignal.init({
+        appId: "3e4733c8-34bd-46ac-8d96-84e7ba37d9fb", // ⚠️ Replace with your actual OneSignal App ID
+      });
     });
-  });
-</script>
+  </script>
+</head>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
