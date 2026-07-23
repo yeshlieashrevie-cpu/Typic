@@ -4,6 +4,22 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Typic — Order Tickets</title>
+
+<!-- PWA Manifest & Theme -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#000000">
+
+<!-- OneSignal Push Notifications -->
+<script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+<script>
+  window.OneSignalDeferred = window.OneSignalDeferred || [];
+  OneSignalDeferred.push(async function(OneSignal) {
+    await OneSignal.init({
+      appId: "3e4733c8-34bd-46ac-8d96-84e7ba37d9fb",
+    });
+  });
+</script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -200,7 +216,7 @@
         <p>${escapeHtml(f.message)}</p>
         <p class="meta">${formatDate(f.created_at)}</p>
       </div>
-    `).join('');
+    `);
   }
 
   async function loadSignups(){
@@ -214,7 +230,7 @@
         <p style="font-family:var(--font-mono); font-weight:700;">${escapeHtml(s.email)}</p>
         <p class="meta">${formatDate(s.created_at)}</p>
       </div>
-    `).join('');
+    `);
   }
 
   checkSession();
