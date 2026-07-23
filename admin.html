@@ -10,18 +10,18 @@
 <meta name="theme-color" content="#000000">
 
 <head>
-  <!-- 1. OneSignal SDK Script -->
-  <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.sw.js" defer></script>
   
-  <!-- 2. OneSignal Initialization -->
-  <script>
-    window.OneSignalDeferred = window.OneSignalDeferred || [];
-    OneSignalDeferred.push(async function(OneSignal) {
-      await OneSignal.init({
-        appId: "3e4733c8-34bd-46ac-8d96-84e7ba37d9fb", // ⚠️ Replace with your actual OneSignal App ID
-      });
+<!-- OneSignal Web SDK -->
+<script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+<script>
+  window.OneSignalDeferred = window.OneSignalDeferred || [];
+  OneSignalDeferred.push(async function(OneSignal) {
+    await OneSignal.init({
+      appId: "3e4733c8-34bd-46ac-8d96-84e7ba37d9fb",
     });
-  </script>
+  });
+</script>
+  
 </head>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -251,9 +251,25 @@
   checkSession();
 </script>
 
-<button onclick="window.OneSignalDeferred = window.OneSignalDeferred || []; OneSignalDeferred.push(async function(OneSignal) { await OneSignal.User.PushSubscription.optIn(); alert('Notification Subscription Triggered!'); });" style="position: fixed; bottom: 25px; right: 25px; z-index: 999999; padding: 14px 22px; font-size: 15px; background-color: #28a745; color: #ffffff; border: none; border-radius: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.4); cursor: pointer; font-weight: bold;">
+<!-- Floating Notification Button -->
+<button id="onesignal-notify-btn" style="position: fixed; bottom: 25px; right: 25px; z-index: 2147483647; pointer-events: auto !important; padding: 14px 22px; font-size: 15px; background-color: #28a745; color: #ffffff; border: none; border-radius: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.4); cursor: pointer; font-weight: bold;">
   🔔 Enable Order Notifications
 </button>
+
+<script>
+  document.getElementById('onesignal-notify-btn').addEventListener('click', function() {
+    alert('Button click registered!');
+    window.OneSignalDeferred = window.OneSignalDeferred || [];
+    OneSignalDeferred.push(async function(OneSignal) {
+      try {
+        await OneSignal.User.PushSubscription.optIn();
+        alert('Successfully opted in to notifications!');
+      } catch (err) {
+        alert('OneSignal Error: ' + err.message);
+      }
+    });
+  });
+</script>
 
 </body>
 </html>
