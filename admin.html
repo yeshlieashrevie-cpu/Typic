@@ -55,6 +55,17 @@
   .feedback-card .meta{ font-size:11px; color:var(--ink-faint); margin-top:8px; }
   .empty-note{ text-align:center; color:var(--ink-soft); padding:50px 0; font-size:13.5px; }
 </style>
+
+<script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.sw.js" defer></script>
+<script>
+  window.OneSignalDeferred = window.OneSignalDeferred || [];
+  OneSignalDeferred.push(async function(OneSignal) {
+    await OneSignal.init({
+      appId: "3e4733c8-34bd-46ac-8d96-84e7ba37d9fb",
+    });
+  });
+</script>
+  
 </head>
 <body>
 
