@@ -1,75 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Typic — Order Tickets</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Typic — Order Tickets</title>
 
-<!-- PWA Manifest & Theme -->
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#000000">
+  <!-- PWA Manifest & Theme -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#000000">
 
-<head>
-  
-<!-- OneSignal Web SDK -->
-<script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
-<script>
-  window.OneSignalDeferred = window.OneSignalDeferred || [];
-  OneSignalDeferred.push(async function(OneSignal) {
-    await OneSignal.init({
-      appId: "3e4733c8-34bd-46ac-8d96-84e7ba37d9fb",
+  <!-- OneSignal Web SDK -->
+  <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+  <script>
+    window.OneSignalDeferred = window.OneSignalDeferred || [];
+    OneSignalDeferred.push(async function(OneSignal) {
+      await OneSignal.init({
+        appId: "3e4733c8-34bd-46ac-8d96-84e7ba37d9fb",
+      });
     });
-  });
-</script>
-  
-</head>
+  </script>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
-<style>
-  body{ padding: 18px 18px 60px; max-width: 640px; margin: 0 auto; }
-  .login-box{ max-width:360px; margin: 90px auto 0; padding:28px; }
-  .login-box .input{ margin-bottom:12px; }
-  .admin-header{ display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:18px; gap:12px; }
-  .tab-row{ display:flex; gap:8px; margin-bottom:18px; }
-  .tab-btn{ flex:1; padding:11px; border-radius:999px; background:var(--paper-strong); border:1px solid var(--paper-border); font-weight:700; font-size:12.5px; color:var(--ink-soft); }
-  .tab-btn.active{ background: var(--gradient-accent); color:#fff; box-shadow: 0 0 16px -4px rgba(167,139,250,0.7); }
-  .ticket{ margin-bottom: 20px; padding:0; overflow:hidden; }
-  .ticket-head{ padding:16px 18px; border-bottom:1px dashed var(--line); }
-  .ticket-code{ font-family:var(--font-mono); font-weight:700; font-size:14px; }
-  .ticket-date{ font-size:11.5px; color:var(--ink-soft); margin-top:2px; }
-  .ticket-body{ padding: 4px 18px 18px; }
-  .ticket-section-label{ font-family: var(--font-mono); font-size:10.5px; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-faint); margin: 16px 0 8px; }
-  .ticket-line{ display:flex; gap:12px; align-items:center; padding:10px 0; border-bottom:1px solid var(--line); }
-  .ticket-line:last-child{ border-bottom:none; }
-  .ticket-line img{ width:52px; height:52px; border-radius:10px; object-fit:contain; background:var(--coal); flex-shrink:0; border:1px solid var(--line); }
-  .ticket-line-info{ flex:1; min-width:0; }
-  .ticket-line-name{ font-weight:700; font-size:13.5px; }
-  .ticket-line-meta{ font-size:11.5px; color:var(--ink-soft); margin-top:2px; }
-  .ticket-line-price{ font-family:var(--font-mono); font-weight:700; font-size:13px; flex-shrink:0; }
-  .ticket-totals{ margin-top:14px; padding-top:12px; border-top:1px dashed var(--line); }
-  .ticket-totals .row{ display:flex; justify-content:space-between; font-size:13px; padding:4px 0; color:var(--ink-soft); }
-  .ticket-totals .row--total{ color:var(--ink); font-weight:800; font-size:16px; padding-top:8px; }
-  .ticket-customer{ font-size:13px; color:var(--ink-soft); line-height:1.7; padding-top:14px; }
-  .ticket-customer strong{ color:var(--ink); font-family: var(--font-display); }
-  .feedback-card{ padding:16px 18px; margin-bottom:12px; }
-  .feedback-card p{ font-size:13.5px; }
-  .feedback-card .meta{ font-size:11px; color:var(--ink-faint); margin-top:8px; }
-  .empty-note{ text-align:center; color:var(--ink-soft); padding:50px 0; font-size:13.5px; }
-</style>
+  <!-- Fonts & Styles -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 
-<script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.sw.js" defer></script>
-<script>
-  window.OneSignalDeferred = window.OneSignalDeferred || [];
-  OneSignalDeferred.push(async function(OneSignal) {
-    await OneSignal.init({
-      appId: "3e4733c8-34bd-46ac-8d96-84e7ba37d9fb",
-    });
-  });
-</script>
-  
+  <style>
+    body{ padding: 18px 18px 60px; max-width: 640px; margin: 0 auto; }
+    .login-box{ max-width:360px; margin: 90px auto 0; padding:28px; }
+    .login-box .input{ margin-bottom:12px; }
+    .admin-header{ display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:18px; gap:12px; }
+    .tab-row{ display:flex; gap:8px; margin-bottom:18px; }
+    .tab-btn{ flex:1; padding:11px; border-radius:999px; background:var(--paper-strong); border:1px solid var(--paper-border); font-weight:700; font-size:12.5px; color:var(--ink-soft); }
+    .tab-btn.active{ background: var(--gradient-accent); color:#fff; box-shadow: 0 0 16px -4px rgba(167,139,250,0.7); }
+    .ticket{ margin-bottom: 20px; padding:0; overflow:hidden; }
+    .ticket-head{ padding:16px 18px; border-bottom:1px dashed var(--line); }
+    .ticket-code{ font-family:var(--font-mono); font-weight:700; font-size:14px; }
+    .ticket-date{ font-size:11.5px; color:var(--ink-soft); margin-top:2px; }
+    .ticket-body{ padding: 4px 18px 18px; }
+    .ticket-section-label{ font-family: var(--font-mono); font-size:10.5px; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-faint); margin: 16px 0 8px; }
+    .ticket-line{ display:flex; gap:12px; align-items:center; padding:10px 0; border-bottom:1px solid var(--line); }
+    .ticket-line:last-child{ border-bottom:none; }
+    .ticket-line img{ width:52px; height:52px; border-radius:10px; object-fit:contain; background:var(--coal); flex-shrink:0; border:1px solid var(--line); }
+    .ticket-line-info{ flex:1; min-width:0; }
+    .ticket-line-name{ font-weight:700; font-size:13.5px; }
+    .ticket-line-meta{ font-size:11.5px; color:var(--ink-soft); margin-top:2px; }
+    .ticket-line-price{ font-family:var(--font-mono); font-weight:700; font-size:13px; flex-shrink:0; }
+    .ticket-totals{ margin-top:14px; padding-top:12px; border-top:1px dashed var(--line); }
+    .ticket-totals .row{ display:flex; justify-content:space-between; font-size:13px; padding:4px 0; color:var(--ink-soft); }
+    .ticket-totals .row--total{ color:var(--ink); font-weight:800; font-size:16px; padding-top:8px; }
+    .ticket-customer{ font-size:13px; color:var(--ink-soft); line-height:1.7; padding-top:14px; }
+    .ticket-customer strong{ color:var(--ink); font-family: var(--font-display); }
+    .feedback-card{ padding:16px 18px; margin-bottom:12px; }
+    .feedback-card p{ font-size:13.5px; }
+    .feedback-card .meta{ font-size:11px; color:var(--ink-faint); margin-top:8px; }
+    .empty-note{ text-align:center; color:var(--ink-soft); padding:50px 0; font-size:13.5px; }
+  </style>
 </head>
 <body>
 
@@ -252,7 +239,7 @@
 </script>
 
 <!-- Floating Notification Button -->
-<button id="onesignal-notify-btn" style="position: fixed; bottom: 25px; right: 25px; z-index: 2147483647; pointer-events: auto !important; padding: 14px 22px; font-size: 15px; background-color: #28a745; color: #ffffff; border: none; border-radius: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.4); cursor: pointer; font-weight: bold;">
+<button id="onesignal-notify-btn" type="button" style="position: fixed; bottom: 25px; right: 25px; z-index: 2147483647; pointer-events: auto !important; padding: 14px 22px; font-size: 15px; background-color: #28a745; color: #ffffff; border: none; border-radius: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.4); cursor: pointer; font-weight: bold;">
   🔔 Enable Order Notifications
 </button>
 
