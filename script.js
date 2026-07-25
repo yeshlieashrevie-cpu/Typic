@@ -964,15 +964,17 @@ try {
   console.warn('Supabase not configured yet:', e);
 }
 
-async function submitOrder(payload) {
-  if (!supabaseClient) {
-    console.info('[demo mode — Supabase not configured] order payload:', payload);
-    return { ok: true, demo: true };
-  }
-  
-  // 1. Save order to Supabase
+async function submitOrder(payload) {          
+  if (!supabaseClient) { ... }
   const { data, error } = await supabaseClient.from('orders').insert([payload]);
   if (error) throw error;
+
+async function submitOrder(payload) {          
+  if (!supabaseClient) { ... }
+  const { data, error } = await supabaseClient.from('orders').insert([payload]);
+  if (error) throw error;
+  return { ok: true, data };
+}                                                
 
 async function submitOrder(payload) {
   if (!supabaseClient) {
