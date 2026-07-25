@@ -953,6 +953,7 @@ function handleDetailsSubmit(e) {
    ========================================================= */
 
 let supabaseClient = null;
+
 try {
   if (window.supabase && CONFIG.SUPABASE_URL !== 'YOUR_SUPABASE_URL') {
     supabaseClient = window.supabase.createClient(
@@ -964,25 +965,18 @@ try {
   console.warn('Supabase not configured yet:', e);
 }
 
-async function submitOrder(payload) {          
-  if (!supabaseClient) { ... }
-  const { data, error } = await supabaseClient.from('orders').insert([payload]);
-  if (error) throw error;
-
-async function submitOrder(payload) {          
-  if (!supabaseClient) { ... }
-  const { data, error } = await supabaseClient.from('orders').insert([payload]);
-  if (error) throw error;
-  return { ok: true, data };
-}                                                
-
 async function submitOrder(payload) {
   if (!supabaseClient) {
     console.info('[demo mode — Supabase not configured] order payload:', payload);
     return { ok: true, demo: true };
   }
-  const { data, error } = await supabaseClient.from('orders').insert([payload]);
+
+  const { data, error } = await supabaseClient
+    .from('orders')
+    .insert([payload]);
+
   if (error) throw error;
+
   return { ok: true, data };
 }
 
