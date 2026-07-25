@@ -735,23 +735,6 @@ img{ max-width:100%; display:block; }
   position: relative;
   overflow: hidden;
 }
-
-.swatch-card--dark {
-  background-image: url("step1.png");
-}
-
-.swatch-card--cream {
-  background-image: url("step2.png");
-}
-
-.swatch-card--sangria {
-  background-image: url("step3.png");
-}
-
-.swatch-card--cornflower {
-  background-image: url("step4.png");
-}
-
 .hero-video {
   width: 100%;
   height: 100%;
