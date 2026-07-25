@@ -24,132 +24,19 @@
   <!-- Fonts & Styles -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 
   <style>
-    /* =====================================================================
-       DESIGN TOKENS
-       ---------------------------------------------------------------------
-       This file is fully self-contained (no external style.css — see notes
-       in the accompanying message). The --paper-*/--ink-*/--line/--coal/
-       --gradient-accent tokens below reconstruct the original admin.html's
-       look from its class usage. If your real style.css has different exact
-       values, these are centralized here and safe to swap.
-
-       A second token set (--brand-*, --glass-*) powers only the customer
-       Proof Portal (#proofPortal), per PRD Part 2's separate spec: Space
-       Grotesk / Inter, purple-pink-orange-gold, Bento + Glassmorphism.
-       ===================================================================== */
-    :root{
-      /* admin "paper ticket" theme (reconstructed) */
-      --paper: #FAF8F5;
-      --paper-strong: #FFFFFF;
-      --paper-border: rgba(24,24,27,0.09);
-      --ink: #18181B;
-      --ink-soft: #6B6B72;
-      --ink-faint: #A1A1AA;
-      --line: rgba(24,24,27,0.13);
-      --coal: #121214;
-      --gradient-accent: linear-gradient(135deg, #7D39EB 0%, #C026D3 45%, #F59E0B 100%);
-      --font-display: 'Bricolage Grotesque', Georgia, serif;
-      --font-body: 'Manrope', -apple-system, sans-serif;
-      --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
-      --radius-card: 20px;
-      --ok: #16A34A;
-      --warn: #D97706;
-      --danger: #DC2626;
-
-      /* proof portal "premium creative" theme */
-      --brand-purple: #7D39EB;
-      --brand-violet: #A78BFA;
-      --brand-pink: #EC4899;
-      --brand-orange: #F59E0B;
-      --brand-gold: #FBBF24;
-      --brand-gradient: linear-gradient(135deg, #7D39EB 0%, #EC4899 50%, #F59E0B 100%);
-      --brand-ink: #1C1524;
-      --brand-ink-soft: #6B6478;
-      --brand-white: #FFFFFF;
-      --glass-bg: rgba(255,255,255,0.62);
-      --glass-bg-strong: rgba(255,255,255,0.8);
-      --glass-border: rgba(255,255,255,0.55);
-      --glass-shadow: 0 20px 60px -20px rgba(125,57,235,0.28);
-      --font-brand-display: 'Space Grotesk', var(--font-display);
-      --font-brand-body: 'Inter', var(--font-body);
-    }
-
-    *{ box-sizing: border-box; }
-    html{ -webkit-text-size-adjust: 100%; }
-    body{
-      margin:0;
-      font-family: var(--font-body);
-      color: var(--ink);
-      background: var(--paper);
-      -webkit-font-smoothing: antialiased;
-    }
-    #adminRoot body, #adminRoot{ padding: 18px 18px 60px; max-width: 640px; margin: 0 auto; }
-    img{ max-width:100%; display:block; }
-    button{ font-family: inherit; cursor:pointer; }
-    textarea, input, select{ font-family: inherit; }
-
-    /* ---- shared primitives (reconstructed .cell/.btn/.input/.eyebrow) ---- */
-    .cell{
-      background: var(--paper-strong);
-      border: 1px solid var(--paper-border);
-      border-radius: var(--radius-card);
-      box-shadow: 0 1px 2px rgba(24,24,27,0.04);
-    }
-    .eyebrow{
-      font-family: var(--font-mono);
-      font-size: 11px;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      color: var(--ink-faint);
-      font-weight: 600;
-    }
-    .field-hint{ font-size: 12.5px; color: var(--ink-soft); }
-    .form-error{ color: var(--danger); }
-    .input{
-      width:100%;
-      padding: 12px 14px;
-      border-radius: 12px;
-      border: 1px solid var(--paper-border);
-      background: var(--paper);
-      color: var(--ink);
-      font-size: 14px;
-    }
-    .input:focus{ outline: 2px solid var(--brand-violet); outline-offset: 1px; }
-    .btn{
-      display:inline-flex; align-items:center; justify-content:center; gap:6px;
-      padding: 11px 18px;
-      border-radius: 999px;
-      border: 1px solid transparent;
-      font-weight: 700;
-      font-size: 13.5px;
-      background: var(--paper-strong);
-      color: var(--ink);
-      transition: transform .15s ease, box-shadow .15s ease, opacity .15s ease;
-    }
-    .btn:active{ transform: scale(0.97); }
-    .btn:disabled{ opacity:.5; cursor:not-allowed; transform:none; }
-    .btn--primary{ background: var(--gradient-accent); color:#fff; box-shadow: 0 8px 20px -8px rgba(167,139,250,0.65); }
-    .btn--ghost{ background: transparent; border-color: var(--paper-border); color: var(--ink-soft); }
-    .btn--danger-ghost{ background: transparent; border-color: rgba(220,38,38,0.35); color: var(--danger); }
-    .btn--block{ width:100%; }
-    .btn--sm{ padding: 8px 14px; font-size: 12.5px; }
-
-    /* ---- login (preserved) ---- */
+    body{ padding: 18px 18px 60px; max-width: 640px; margin: 0 auto; }
     .login-box{ max-width:360px; margin: 90px auto 0; padding:28px; }
     .login-box .input{ margin-bottom:12px; }
-
-    /* ---- admin shell (preserved) ---- */
     .admin-header{ display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:18px; gap:12px; }
     .tab-row{ display:flex; gap:8px; margin-bottom:18px; }
     .tab-btn{ flex:1; padding:11px; border-radius:999px; background:var(--paper-strong); border:1px solid var(--paper-border); font-weight:700; font-size:12.5px; color:var(--ink-soft); }
     .tab-btn.active{ background: var(--gradient-accent); color:#fff; box-shadow: 0 0 16px -4px rgba(167,139,250,0.7); }
-
-    /* ---- ticket (preserved, + new Process Proof row) ---- */
     .ticket{ margin-bottom: 20px; padding:0; overflow:hidden; }
-    .ticket-head{ padding:16px 18px; border-bottom:1px dashed var(--line); display:flex; justify-content:space-between; align-items:flex-start; gap:10px; }
+    .ticket-head{ padding:16px 18px; border-bottom:1px dashed var(--line); }
     .ticket-code{ font-family:var(--font-mono); font-weight:700; font-size:14px; }
     .ticket-date{ font-size:11.5px; color:var(--ink-soft); margin-top:2px; }
     .ticket-body{ padding: 4px 18px 18px; }
@@ -170,1237 +57,193 @@
     .feedback-card p{ font-size:13.5px; }
     .feedback-card .meta{ font-size:11px; color:var(--ink-faint); margin-top:8px; }
     .empty-note{ text-align:center; color:var(--ink-soft); padding:50px 0; font-size:13.5px; }
-
-    /* ---- NEW: status pills + Process Proof trigger row ---- */
-    .ticket-proof-row{ display:flex; align-items:center; justify-content:space-between; gap:10px; padding:12px 18px; border-top: 1px dashed var(--line); background: rgba(167,139,250,0.05); }
-    .status-pills{ display:flex; flex-wrap:wrap; gap:6px; }
-    .pill{
-      display:inline-flex; align-items:center; gap:5px;
-      font-family: var(--font-mono); font-size: 10.5px; font-weight:600;
-      padding: 4px 9px; border-radius: 999px;
-      background: rgba(24,24,27,0.06); color: var(--ink-soft);
-      white-space: nowrap;
-    }
-    .pill::before{ content:''; width:6px; height:6px; border-radius:50%; background: currentColor; }
-    .pill--wait{ color: var(--ink-faint); }
-    .pill--ok, .pill--paid, .pill--approved{ color: var(--ok); background: rgba(22,163,74,0.1); }
-    .pill--warn, .pill--revision{ color: var(--warn); background: rgba(217,119,6,0.1); }
-    .pill--sent{ color: var(--brand-purple); background: rgba(125,57,235,0.1); }
-    .pill--danger{ color: var(--danger); background: rgba(220,38,38,0.08); }
-
-    /* ---- NEW: Process Proof modal (admin workspace) ---- */
-    .proof-modal-overlay{
-      position: fixed; inset: 0; z-index: 1000;
-      background: rgba(18,18,20,0.55);
-      backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
-      display:flex; align-items:flex-end; justify-content:center;
-      animation: fadeIn .18s ease;
-    }
-    @media (min-width: 720px){
-      .proof-modal-overlay{ align-items:center; padding: 24px; }
-    }
-    .proof-modal{
-      width:100%; max-width: 640px; max-height: 92vh;
-      background: rgba(255,255,255,0.85);
-      backdrop-filter: blur(24px) saturate(160%); -webkit-backdrop-filter: blur(24px) saturate(160%);
-      border: 1px solid rgba(255,255,255,0.6);
-      border-radius: 28px 28px 0 0;
-      box-shadow: 0 -20px 60px -20px rgba(18,18,20,0.35);
-      overflow-y: auto;
-      animation: slideUp .22s cubic-bezier(.2,.8,.2,1);
-    }
-    @media (min-width: 720px){
-      .proof-modal{ border-radius: 28px; animation: scaleIn .18s cubic-bezier(.2,.8,.2,1); }
-    }
-    @keyframes fadeIn{ from{ opacity:0; } to{ opacity:1; } }
-    @keyframes slideUp{ from{ transform: translateY(24px); opacity:0; } to{ transform: translateY(0); opacity:1; } }
-    @keyframes scaleIn{ from{ transform: scale(.97); opacity:0; } to{ transform: scale(1); opacity:1; } }
-
-    .proof-modal-head{ position: sticky; top:0; display:flex; justify-content:space-between; align-items:center; padding: 18px 22px; background: inherit; border-bottom: 1px solid var(--paper-border); z-index:2; }
-    .proof-modal-head h3{ font-family: var(--font-display); font-size:17px; margin:0; }
-    .proof-modal-close{ width:32px; height:32px; border-radius:50%; background: rgba(24,24,27,0.06); border:none; font-size:16px; line-height:1; color: var(--ink-soft); }
-    .proof-modal-body{ padding: 20px 22px 32px; }
-    .proof-modal-section{ margin-bottom: 26px; }
-    .proof-modal-section-title{ font-family: var(--font-mono); font-size:10.5px; text-transform:uppercase; letter-spacing:.07em; color: var(--ink-faint); margin: 0 0 10px; display:flex; align-items:center; gap:8px; }
-    .proof-summary-grid{ display:grid; grid-template-columns: 1fr 1fr; gap: 10px 16px; font-size:13px; }
-    .proof-summary-grid dt{ color: var(--ink-faint); font-size:11px; text-transform:uppercase; letter-spacing:.05em; }
-    .proof-summary-grid dd{ margin:2px 0 0; font-weight:600; }
-
-    .upload-zone{
-      border: 1.5px dashed var(--paper-border); border-radius: 18px;
-      padding: 22px; text-align:center; cursor:pointer;
-      transition: border-color .15s ease, background .15s ease;
-      background: rgba(255,255,255,0.4);
-    }
-    .upload-zone:hover, .upload-zone.dragover{ border-color: var(--brand-violet); background: rgba(167,139,250,0.06); }
-    .upload-zone input[type=file]{ display:none; }
-    .upload-zone-icon{ font-size: 26px; margin-bottom:6px; }
-    .mockup-preview-wrap{ position:relative; border-radius:18px; overflow:hidden; background: var(--coal); }
-    .mockup-preview-wrap img{ width:100%; max-height: 320px; object-fit:contain; }
-    .mockup-preview-actions{ display:flex; gap:8px; margin-top:10px; }
-    .upload-progress{ height:4px; background: rgba(24,24,27,0.08); border-radius:999px; overflow:hidden; margin-top:10px; }
-    .upload-progress-bar{ height:100%; width:0%; background: var(--gradient-accent); transition: width .2s ease; }
-
-    .status-select-row{ display:grid; grid-template-columns: 1fr 1fr; gap:12px; }
-    .status-select-row label{ font-size:11.5px; color:var(--ink-soft); font-weight:600; display:block; margin-bottom:6px; }
-    select.input{ appearance:none; background-image: linear-gradient(45deg, transparent 50%, var(--ink-faint) 50%), linear-gradient(135deg, var(--ink-faint) 50%, transparent 50%); background-position: calc(100% - 18px) center, calc(100% - 13px) center; background-size: 5px 5px, 5px 5px; background-repeat:no-repeat; }
-
-    .proof-preview-embed{ border-radius: 18px; overflow-x:hidden; overflow-y:auto; max-height: 460px; border: 1px solid var(--paper-border); padding: 14px; background: linear-gradient(160deg, rgba(125,57,235,0.05), rgba(236,72,153,0.04)); }
-    .proof-preview-embed .pp-bento{ gap: 12px; }
-    .proof-preview-embed .pp-card{ padding: 16px; }
-
-    .modal-actions{ display:flex; gap:10px; flex-wrap:wrap; }
-    .modal-actions .btn{ flex:1; min-width: 140px; }
-
-    /* ---- toast ---- */
-    #toastHost{ position: fixed; left:0; right:0; bottom: 18px; z-index: 2000; display:flex; flex-direction:column; align-items:center; gap:8px; pointer-events:none; padding: 0 16px; }
-    .toast{
-      pointer-events:auto;
-      max-width: 420px; width:100%;
-      background: var(--ink); color:#fff;
-      padding: 13px 18px; border-radius: 14px; font-size:13.5px;
-      box-shadow: 0 10px 30px -8px rgba(0,0,0,0.4);
-      animation: toastIn .18s ease;
-    }
-    .toast--error{ background: var(--danger); }
-    .toast--success{ background: var(--ok); }
-    @keyframes toastIn{ from{ opacity:0; transform: translateY(8px); } to{ opacity:1; transform:none; } }
-
-    .spinner{ width:15px; height:15px; border-radius:50%; border: 2px solid rgba(255,255,255,0.4); border-top-color:#fff; animation: spin .7s linear infinite; display:inline-block; }
-    .spinner--dark{ border-color: rgba(24,24,27,0.2); border-top-color: var(--ink); }
-    @keyframes spin{ to{ transform: rotate(360deg); } }
   </style>
 </head>
 <body>
-<style>
-  /* =====================================================================
-     CUSTOMER PROOF PORTAL — separate visual system per PRD Part 2/4/6:
-     Bento Grid + Glassmorphism, Space Grotesk / Inter, purple-pink-gold.
-     Scoped entirely under #proofPortal so it never touches admin styles.
-     ===================================================================== */
-  #proofPortal{
-    display:none;
-    min-height:100vh;
-    font-family: var(--font-brand-body);
-    color: var(--brand-ink);
-    position:relative;
-    overflow-x:hidden;
-  }
-  #proofPortal.is-active{ display:block; }
 
-  .pp-bg{
-    position:fixed; inset:0; z-index:-1;
-    background:
-      radial-gradient(circle at 12% 8%, rgba(125,57,235,0.30), transparent 42%),
-      radial-gradient(circle at 88% 15%, rgba(236,72,153,0.26), transparent 45%),
-      radial-gradient(circle at 50% 95%, rgba(245,158,11,0.22), transparent 50%),
-      #FBF9FF;
-  }
-  .pp-shell{ max-width: 1080px; margin:0 auto; padding: 28px 20px 80px; }
-
-  .pp-topbar{ display:flex; align-items:center; justify-content:space-between; padding: 6px 4px 28px; }
-  .pp-logo{ font-family: var(--font-brand-display); font-weight:700; font-size:17px; letter-spacing:-.01em; }
-  .pp-logo span{ background: var(--brand-gradient); -webkit-background-clip:text; background-clip:text; color:transparent; }
-  .pp-order-chip{ font-family: var(--font-mono); font-size:11.5px; color: var(--brand-ink-soft); background: var(--glass-bg); border:1px solid var(--glass-border); padding:6px 14px; border-radius:999px; backdrop-filter: blur(10px); }
-
-  .pp-glass{
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
-    border-radius: 28px;
-    backdrop-filter: blur(20px) saturate(160%);
-    -webkit-backdrop-filter: blur(20px) saturate(160%);
-    box-shadow: var(--glass-shadow);
-  }
-
-  /* ---- Bento grid ---- */
-  .pp-bento{
-    display:grid;
-    grid-template-columns: repeat(12, 1fr);
-    gap: 16px;
-  }
-  .pp-card{ padding: 26px; }
-  .pp-span-12{ grid-column: span 12; }
-  .pp-span-8{ grid-column: span 8; }
-  .pp-span-7{ grid-column: span 7; }
-  .pp-span-5{ grid-column: span 5; }
-  .pp-span-6{ grid-column: span 6; }
-  .pp-span-4{ grid-column: span 4; }
-  @media (max-width: 860px){
-    .pp-span-8, .pp-span-7, .pp-span-5, .pp-span-6, .pp-span-4{ grid-column: span 12; }
-  }
-
-  .pp-card-label{ font-family: var(--font-mono); font-size:10.5px; text-transform:uppercase; letter-spacing:.09em; color: var(--brand-ink-soft); margin:0 0 14px; display:flex; align-items:center; gap:8px; }
-  .pp-h1{ font-family: var(--font-brand-display); font-weight:700; font-size: clamp(22px, 4vw, 30px); line-height:1.15; margin:0 0 8px; }
-  .pp-sub{ color: var(--brand-ink-soft); font-size:14px; line-height:1.6; margin:0; }
-
-  /* ---- hero / design proof card ---- */
-  .pp-hero-card{ padding:0; overflow:hidden; cursor:zoom-in; position:relative; }
-  .pp-hero-img-wrap{ aspect-ratio: 4/3; background: #17141F; display:flex; align-items:center; justify-content:center; overflow:hidden; }
-  .pp-hero-img-wrap img{ width:100%; height:100%; object-fit:contain; transition: transform .35s ease; }
-  .pp-hero-card:hover .pp-hero-img-wrap img{ transform: scale(1.035); }
-  .pp-hero-caption{ position:absolute; left:20px; bottom:16px; color:#fff; font-family: var(--font-mono); font-size:11px; background: rgba(0,0,0,0.35); backdrop-filter: blur(6px); padding:6px 12px; border-radius:999px; }
-
-  /* ---- status tracker ---- */
-  .pp-tracker{ display:flex; flex-direction:column; gap:14px; }
-  .pp-track-step{ display:flex; align-items:center; gap:12px; opacity:.4; }
-  .pp-track-step.is-done{ opacity:1; }
-  .pp-track-step.is-current{ opacity:1; }
-  .pp-track-dot{ width:10px; height:10px; border-radius:50%; background: var(--brand-ink-soft); flex-shrink:0; }
-  .pp-track-step.is-done .pp-track-dot{ background: var(--ok); }
-  .pp-track-step.is-current .pp-track-dot{ background: var(--brand-gradient); box-shadow: 0 0 0 4px rgba(125,57,235,0.18); }
-  .pp-track-label{ font-size:13px; font-weight:600; }
-  .pp-track-step.is-current .pp-track-label{ background: var(--brand-gradient); -webkit-background-clip:text; background-clip:text; color:transparent; }
-
-  /* ---- order / billing ---- */
-  .pp-kv{ display:flex; justify-content:space-between; font-size:13.5px; padding:8px 0; border-bottom:1px dashed rgba(28,21,36,0.1); color: var(--brand-ink-soft); }
-  .pp-kv:last-child{ border-bottom:none; }
-  .pp-kv strong{ color: var(--brand-ink); font-weight:700; }
-  .pp-kv--total strong{ font-size:17px; }
-
-  /* ---- designer notes ---- */
-  .pp-notes{ font-size:14px; line-height:1.7; color: var(--brand-ink-soft); font-style:italic; }
-
-  /* ---- products list ---- */
-  .pp-product-row{ display:flex; gap:12px; align-items:center; padding:10px 0; border-bottom:1px solid rgba(28,21,36,0.07); }
-  .pp-product-row:last-child{ border-bottom:none; }
-  .pp-product-row img{ width:46px; height:46px; border-radius:10px; object-fit:contain; background:#17141F; border:1px solid rgba(28,21,36,0.08); }
-  .pp-product-name{ font-weight:700; font-size:13px; }
-  .pp-product-meta{ font-size:11.5px; color: var(--brand-ink-soft); }
-
-  /* ---- actions ---- */
-  .pp-btn{
-    display:inline-flex; align-items:center; justify-content:center; gap:8px;
-    padding: 15px 20px; border-radius:999px; border:none;
-    font-family: var(--font-brand-body); font-weight:700; font-size:14px;
-    transition: transform .15s ease, box-shadow .15s ease, opacity .15s ease;
-    width:100%;
-  }
-  .pp-btn:active{ transform: scale(.97); }
-  .pp-btn:disabled{ opacity:.45; cursor:not-allowed; }
-  .pp-btn--primary{ background: var(--brand-gradient); color:#fff; box-shadow: 0 14px 30px -10px rgba(125,57,235,0.55); }
-  .pp-btn--secondary{ background: rgba(28,21,36,0.06); color: var(--brand-ink); }
-  .pp-btn--outline{ background: transparent; border: 1.5px solid rgba(28,21,36,0.18); color: var(--brand-ink); }
-  .pp-actions-stack{ display:flex; flex-direction:column; gap:10px; }
-
-  /* ---- lightbox ---- */
-  .pp-lightbox{ position:fixed; inset:0; z-index:1500; background: rgba(10,8,15,0.92); display:flex; align-items:center; justify-content:center; padding: 30px; animation: fadeIn .18s ease; }
-  .pp-lightbox img{ max-width:100%; max-height:100%; border-radius:12px; }
-  .pp-lightbox-close{ position:absolute; top:20px; right:20px; width:40px; height:40px; border-radius:50%; background: rgba(255,255,255,0.12); border:none; color:#fff; font-size:18px; }
-
-  /* ---- modals (revision / payment) ---- */
-  .pp-modal-overlay{ position:fixed; inset:0; z-index:1400; background: rgba(10,8,15,0.5); backdrop-filter: blur(6px); display:flex; align-items:center; justify-content:center; padding:20px; animation: fadeIn .18s ease; }
-  .pp-modal{ width:100%; max-width: 460px; padding: 30px 26px; animation: scaleIn .18s cubic-bezier(.2,.8,.2,1); }
-  .pp-modal h3{ font-family: var(--font-brand-display); font-size:19px; margin:0 0 10px; }
-  .pp-modal p{ font-size:13.5px; color: var(--brand-ink-soft); line-height:1.6; margin:0 0 18px; }
-  .pp-modal textarea{ width:100%; min-height:110px; border-radius:14px; border:1px solid rgba(28,21,36,0.15); padding:12px 14px; font-family:inherit; font-size:14px; resize:vertical; background: rgba(255,255,255,0.6); }
-  .pp-modal-actions{ display:flex; gap:10px; margin-top:18px; }
-  .pp-modal-actions .pp-btn{ flex:1; }
-
-  .pp-payment-grid{ display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-bottom:6px; }
-  .pp-payment-opt{
-    display:flex; flex-direction:column; align-items:center; gap:6px;
-    padding: 16px 10px; border-radius:16px; border: 1.5px solid rgba(28,21,36,0.12);
-    background: rgba(255,255,255,0.5); font-size:12.5px; font-weight:700; color: var(--brand-ink);
-  }
-  .pp-payment-opt.is-selected{ border-color: var(--brand-purple); background: rgba(125,57,235,0.08); }
-  .pp-payment-opt .icon{ font-size:20px; }
-
-  /* ---- skeleton / empty / error states ---- */
-  .pp-skeleton{ min-height:100vh; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:14px; }
-  .pp-skeleton-ring{ width:38px; height:38px; border-radius:50%; border:3px solid rgba(125,57,235,0.15); border-top-color: var(--brand-purple); animation: spin .8s linear infinite; }
-  .pp-skeleton p{ font-family: var(--font-brand-body); color: var(--brand-ink-soft); font-size:13.5px; }
-
-  .pp-state-screen{ min-height:100vh; display:flex; align-items:center; justify-content:center; padding: 30px; text-align:center; }
-  .pp-state-card{ max-width:420px; padding: 40px 32px; }
-  .pp-state-emoji{ font-size:34px; margin-bottom:14px; }
-  .pp-state-card h2{ font-family: var(--font-brand-display); font-size:20px; margin:0 0 10px; }
-  .pp-state-card p{ font-size:14px; color: var(--brand-ink-soft); line-height:1.6; margin:0 0 22px; }
-
-  /* ---- payment return banner ---- */
-  .pp-banner{ padding: 14px 20px; border-radius:16px; font-size:13.5px; font-weight:600; margin-bottom:16px; display:flex; align-items:center; gap:10px; }
-  .pp-banner--success{ background: rgba(22,163,74,0.1); color:#166534; }
-  .pp-banner--pending{ background: rgba(217,119,6,0.1); color:#92400E; }
-
-  @media (min-width: 640px){
-    .pp-payment-grid{ grid-template-columns: repeat(3, 1fr); }
-  }
-</style>
-
-<!-- =====================================================================
-     ADMIN APP (existing functionality preserved, extended with Proof mgmt)
-     ===================================================================== -->
-<div id="adminRoot">
-
-  <div id="loginScreen" class="cell login-box">
-    <p class="eyebrow">Typic admin</p>
-    <h2 style="font-family:var(--font-display); font-weight:800; font-size:22px; margin-top:8px;">Log in</h2>
-    <p class="field-hint" style="margin:8px 0 18px;">Use the admin login you created in Supabase.</p>
-    <input class="input" type="email" id="loginEmail" placeholder="you@email.com" autocomplete="username">
-    <input class="input" type="password" id="loginPassword" placeholder="Password" autocomplete="current-password">
-    <button class="btn btn--primary btn--block" id="loginBtn" type="button" style="margin-top:14px;">Log in</button>
-    <p class="field-hint form-error" id="loginError" role="alert"></p>
-  </div>
-
-  <div id="adminScreen" hidden>
-    <div class="admin-header">
-      <div>
-        <p class="eyebrow">Typic admin</p>
-        <h2 style="font-family:var(--font-display); font-weight:800; font-size:22px;">Order tickets</h2>
-      </div>
-      <button class="btn btn--ghost" id="logoutBtn" type="button">Log out</button>
-    </div>
-
-    <div class="tab-row">
-      <button class="tab-btn active" type="button" data-tab="orders">Orders</button>
-      <button class="tab-btn" type="button" data-tab="feedback">Feedback</button>
-      <button class="tab-btn" type="button" data-tab="signups">Email list</button>
-    </div>
-
-    <div id="ordersPane"></div>
-    <div id="feedbackPane" hidden></div>
-    <div id="signupsPane" hidden></div>
-  </div>
-
-  <!-- NEW: Process Proof modal — populated per-order by openProofModal() -->
-  <div id="proofModalOverlay" class="proof-modal-overlay" hidden>
-    <div class="proof-modal" role="dialog" aria-modal="true" aria-labelledby="proofModalTitle">
-      <div class="proof-modal-head">
-        <h3 id="proofModalTitle">Process proof</h3>
-        <button class="proof-modal-close" id="proofModalCloseBtn" type="button" aria-label="Close">✕</button>
-      </div>
-      <div class="proof-modal-body" id="proofModalBody">
-        <!-- filled by renderProofModal() -->
-      </div>
-    </div>
-  </div>
-
+<div id="loginScreen" class="cell login-box">
+  <p class="eyebrow">Typic admin</p>
+  <h2 style="font-family:var(--font-display); font-weight:800; font-size:22px; margin-top:8px;">Log in</h2>
+  <p class="field-hint" style="margin:8px 0 18px;">Use the admin login you created in Supabase.</p>
+  <input class="input" type="email" id="loginEmail" placeholder="you@email.com" autocomplete="username">
+  <input class="input" type="password" id="loginPassword" placeholder="Password" autocomplete="current-password">
+  <button class="btn btn--primary btn--block" id="loginBtn" type="button" style="margin-top:14px;">Log in</button>
+  <p class="field-hint form-error" id="loginError" role="alert"></p>
 </div>
 
-<!-- Floating Notification Button (preserved, admin-only) -->
+<div id="adminScreen" hidden>
+  <div class="admin-header">
+    <div>
+      <p class="eyebrow">Typic admin</p>
+      <h2 style="font-family:var(--font-display); font-weight:800; font-size:22px;">Order tickets</h2>
+    </div>
+    <button class="btn btn--ghost" id="logoutBtn" type="button">Log out</button>
+  </div>
+
+  <div class="tab-row">
+    <button class="tab-btn active" type="button" data-tab="orders">Orders</button>
+    <button class="tab-btn" type="button" data-tab="feedback">Feedback</button>
+    <button class="tab-btn" type="button" data-tab="signups">Email list</button>
+  </div>
+
+  <div id="ordersPane"></div>
+  <div id="feedbackPane" hidden></div>
+  <div id="signupsPane" hidden></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const SUPABASE_URL = 'https://qcsdzvpncatlvcudvbuh.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFjc2R6dnBuY2F0bHZjdWR2YnVoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ2OTUxNzcsImV4cCI6MjEwMDI3MTE3N30.nJyR2owD8i8DXJj12FM9QgVrJuFdCCG_FO8Q-kRchA8';
+  const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  const $ = (sel) => document.querySelector(sel);
+
+  function formatPHP(n){ return '₱' + Math.round(n || 0).toLocaleString('en-PH'); }
+  function formatDate(iso){
+    const d = new Date(iso);
+    return d.toLocaleString('en-PH', { dateStyle: 'medium', timeStyle: 'short' });
+  }
+  function designImgPath(designId){
+    const folder = String(designId).startsWith('B') ? 'BlackCollection' : 'WhiteCollection';
+    return `${folder}/${designId}.png`;
+  }
+  function escapeHtml(str){
+    const div = document.createElement('div');
+    div.textContent = str ?? '';
+    return div.innerHTML;
+  }
+
+  async function checkSession(){
+    const { data: { session } } = await sb.auth.getSession();
+    if (session) showAdmin(); else showLogin();
+  }
+
+  function showLogin(){
+    $('#loginScreen').hidden = false;
+    $('#adminScreen').hidden = true;
+  }
+
+  function showAdmin(){
+    $('#loginScreen').hidden = true;
+    $('#adminScreen').hidden = false;
+    loadOrders();
+  }
+
+  $('#loginBtn').addEventListener('click', async () => {
+    const email = $('#loginEmail').value.trim();
+    const password = $('#loginPassword').value;
+    $('#loginError').textContent = '';
+    const { error } = await sb.auth.signInWithPassword({ email, password });
+    if (error) {
+      $('#loginError').textContent = 'Could not log in — check your email and password.';
+      return;
+    }
+    showAdmin();
+  });
+
+  $('#logoutBtn').addEventListener('click', async () => {
+    await sb.auth.signOut();
+    showLogin();
+  });
+
+  document.querySelectorAll('.tab-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach((b) => b.classList.toggle('active', b === btn));
+      const tab = btn.dataset.tab;
+      $('#ordersPane').hidden = tab !== 'orders';
+      $('#feedbackPane').hidden = tab !== 'feedback';
+      $('#signupsPane').hidden = tab !== 'signups';
+      if (tab === 'orders') loadOrders();
+      if (tab === 'feedback') loadFeedback();
+      if (tab === 'signups') loadSignups();
+    });
+  });
+
+  async function loadOrders(){
+    const pane = $('#ordersPane');
+    pane.innerHTML = '<p class="empty-note">Loading orders…</p>';
+    const { data, error } = await sb.from('orders').select('*').order('created_at', { ascending: false });
+    if (error) { pane.innerHTML = `<p class="empty-note">Could not load orders — ${escapeHtml(error.message)}</p>`; return; }
+    if (!data.length) { pane.innerHTML = '<p class="empty-note">No orders yet.</p>'; return; }
+    pane.innerHTML = data.map(renderTicket).join('');
+  }
+
+  function renderTicket(order){
+    const designsHtml = (order.designs || []).map((d) => `
+      <div class="ticket-line">
+        <img src="${designImgPath(d.design_id)}" alt="${escapeHtml(d.label)}" onerror="this.style.opacity='0.2'">
+        <div class="ticket-line-info">
+          <div class="ticket-line-name">${escapeHtml(d.label)} &middot; ${escapeHtml(d.size)} ${d.color === 'black' ? 'Black' : 'White'}</div>
+          <div class="ticket-line-meta">${d.personalize ? `&ldquo;${escapeHtml(d.personalize)}&rdquo;` : 'No custom text'}</div>
+        </div>
+        <div class="ticket-line-price">${formatPHP(d.price)}</div>
+      </div>
+    `).join('');
+
+    return `
+      <div class="cell ticket">
+        <div class="ticket-head">
+          <div class="ticket-code">${escapeHtml(order.order_code)}</div>
+          <div class="ticket-date">${formatDate(order.created_at)}</div>
+        </div>
+        <div class="ticket-body">
+          <div class="ticket-customer">
+            <strong>${escapeHtml(order.first_name)} ${escapeHtml(order.last_name)}</strong><br>
+            ${escapeHtml(order.phone)} &middot; ${escapeHtml(order.email)}${order.messenger ? ` &middot; ${escapeHtml(order.messenger)}` : ''}<br>
+            ${escapeHtml(order.address?.street)}, ${escapeHtml(order.address?.barangay)}<br>
+            ${escapeHtml(order.address?.city)}, ${escapeHtml(order.address?.province)} ${escapeHtml(order.address?.zip)}
+          </div>
+
+          <p class="ticket-section-label">Designs</p>
+          ${designsHtml}
+
+          <div class="ticket-totals">
+            <div class="row"><span>Subtotal</span><span>${formatPHP(order.subtotal)}</span></div>
+            <div class="row"><span>${order.shipping_method === 'jnt' ? 'J&T Express' : 'Lalamove'}${order.shipping_rush ? ' (Rush)' : ''}</span><span>${formatPHP(order.shipping_rate)}</span></div>
+            <div class="row row--total"><span>Total</span><span>${formatPHP(order.total)}</span></div>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  async function loadFeedback(){
+    const pane = $('#feedbackPane');
+    pane.innerHTML = '<p class="empty-note">Loading…</p>';
+    const { data, error } = await sb.from('feedback').select('*').order('created_at', { ascending: false });
+    if (error) { pane.innerHTML = `<p class="empty-note">${escapeHtml(error.message)}</p>`; return; }
+    if (!data.length) { pane.innerHTML = '<p class="empty-note">No feedback yet.</p>'; return; }
+    pane.innerHTML = data.map((f) => `
+      <div class="cell feedback-card">
+        <p>${escapeHtml(f.message)}</p>
+        <p class="meta">${formatDate(f.created_at)}</p>
+      </div>
+    `);
+  }
+
+  async function loadSignups(){
+    const pane = $('#signupsPane');
+    pane.innerHTML = '<p class="empty-note">Loading…</p>';
+    const { data, error } = await sb.from('email_signups').select('*').order('created_at', { ascending: false });
+    if (error) { pane.innerHTML = `<p class="empty-note">${escapeHtml(error.message)}</p>`; return; }
+    if (!data.length) { pane.innerHTML = '<p class="empty-note">No signups yet.</p>'; return; }
+    pane.innerHTML = data.map((s) => `
+      <div class="cell feedback-card">
+        <p style="font-family:var(--font-mono); font-weight:700;">${escapeHtml(s.email)}</p>
+        <p class="meta">${formatDate(s.created_at)}</p>
+      </div>
+    `);
+  }
+
+  checkSession();
+</script>
+
+<!-- Floating Notification Button -->
 <button id="onesignal-notify-btn" type="button" style="position: fixed; bottom: 25px; right: 25px; z-index: 2147483647; pointer-events: auto !important; padding: 14px 22px; font-size: 15px; background-color: #28a745; color: #ffffff; border: none; border-radius: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.4); cursor: pointer; font-weight: bold;">
   🔔 Enable Order Notifications
 </button>
 
-<!-- =====================================================================
-     CUSTOMER PROOF PORTAL (new) — active when the URL has ?order=CODE
-     ===================================================================== -->
-<div id="proofPortal">
-  <div class="pp-bg"></div>
-
-  <!-- loading skeleton -->
-  <div id="ppSkeleton" class="pp-skeleton">
-    <div class="pp-skeleton-ring"></div>
-    <p>Preparing your proof…</p>
-  </div>
-
-  <!-- error / expired / not-found state -->
-  <div id="ppErrorState" class="pp-state-screen" hidden>
-    <div class="pp-glass pp-state-card">
-      <div class="pp-state-emoji">🔗</div>
-      <h2 id="ppErrorTitle">This proof link has expired</h2>
-      <p id="ppErrorMessage">We couldn't load your proof. Please check the link or contact Typic Studio for help.</p>
-      <button class="pp-btn pp-btn--secondary" type="button" onclick="location.reload()">Try again</button>
-    </div>
-  </div>
-
-  <!-- main content -->
-  <div id="ppMain" class="pp-shell" hidden>
-    <div class="pp-topbar">
-      <div class="pp-logo">Typic <span>Studio</span></div>
-      <div class="pp-order-chip" id="ppOrderChip"></div>
-    </div>
-
-    <div id="ppPaymentBanner"></div>
-
-    <div class="pp-bento" id="ppBento">
-      <!-- filled by renderProofPortal() -->
-    </div>
-  </div>
-</div>
-
-<!-- lightbox -->
-<div id="ppLightbox" class="pp-lightbox" hidden>
-  <button class="pp-lightbox-close" id="ppLightboxClose" type="button" aria-label="Close">✕</button>
-  <img id="ppLightboxImg" src="" alt="Design proof, full size">
-</div>
-
-<!-- revision request modal -->
-<div id="ppRevisionOverlay" class="pp-modal-overlay" hidden>
-  <div class="pp-glass pp-modal">
-    <h3>Request a revision</h3>
-    <p>Tell us what you'd like to change.</p>
-    <textarea id="ppRevisionNotes" placeholder="e.g. Please move the text lower and make it larger…"></textarea>
-    <p class="form-error" id="ppRevisionError" style="min-height:16px; margin-top:8px;"></p>
-    <div class="pp-modal-actions">
-      <button class="pp-btn pp-btn--secondary" id="ppRevisionCancel" type="button">Go back</button>
-      <button class="pp-btn pp-btn--primary" id="ppRevisionSubmit" type="button">Submit revision</button>
-    </div>
-  </div>
-</div>
-
-<!-- approve confirmation modal -->
-<div id="ppApproveOverlay" class="pp-modal-overlay" hidden>
-  <div class="pp-glass pp-modal">
-    <h3>Approve this design?</h3>
-    <p>You're about to approve this design for production. Please ensure all details are correct before continuing.</p>
-    <div class="pp-modal-actions">
-      <button class="pp-btn pp-btn--secondary" id="ppApproveCancel" type="button">Go back</button>
-      <button class="pp-btn pp-btn--primary" id="ppApproveConfirm" type="button">Approve design</button>
-    </div>
-  </div>
-</div>
-
-<!-- payment method modal -->
-<div id="ppPaymentOverlay" class="pp-modal-overlay" hidden>
-  <div class="pp-glass pp-modal">
-    <h3>Continue to payment</h3>
-    <p>Choose how you'd like to pay for this order.</p>
-    <div class="pp-payment-grid" id="ppPaymentGrid">
-      <button class="pp-payment-opt" data-method="gcash" type="button"><span class="icon">💙</span>GCash</button>
-      <button class="pp-payment-opt" data-method="maya" type="button"><span class="icon">💚</span>Maya</button>
-      <button class="pp-payment-opt" data-method="card" type="button"><span class="icon">💳</span>Card</button>
-      <button class="pp-payment-opt" data-method="online_banking" type="button"><span class="icon">🏦</span>Online Banking</button>
-      <button class="pp-payment-opt" data-method="qrph" type="button"><span class="icon">🔳</span>QR Ph</button>
-      <button class="pp-payment-opt" data-method="cod" type="button"><span class="icon">📦</span>Cash on Delivery</button>
-    </div>
-    <p class="form-error" id="ppPaymentError" style="min-height:16px; margin-top:10px;"></p>
-    <div class="pp-modal-actions">
-      <button class="pp-btn pp-btn--secondary" id="ppPaymentCancel" type="button">Cancel</button>
-      <button class="pp-btn pp-btn--primary" id="ppPaymentSubmit" type="button" disabled>Continue</button>
-    </div>
-  </div>
-</div>
-
-<!-- shared toast host (admin + proof portal) -->
-<div id="toastHost" aria-live="polite"></div>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-'use strict';
-
-/* =========================================================================
-   CONFIG
-   ========================================================================= */
-const SUPABASE_URL = 'https://qcsdzvpncatlvcudvbuh.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFjc2R6dnBuY2F0bHZjdWR2YnVoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ2OTUxNzcsImV4cCI6MjEwMDI3MTE3N30.nJyR2owD8i8DXJj12FM9QgVrJuFdCCG_FO8Q-kRchA8';
-const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-const EDGE_FUNCTIONS_BASE = `${SUPABASE_URL}/functions/v1`;
-
-/* =========================================================================
-   SHARED HELPERS — used by both the admin app and the customer proof portal
-   ========================================================================= */
-const $ = (sel, root) => (root || document).querySelector(sel);
-const $$ = (sel, root) => Array.from((root || document).querySelectorAll(sel));
-
-function formatPHP(n){ return '₱' + Math.round(n || 0).toLocaleString('en-PH'); }
-function formatDate(iso){
-  if (!iso) return '—';
-  const d = new Date(iso);
-  return d.toLocaleString('en-PH', { dateStyle: 'medium', timeStyle: 'short' });
-}
-function designImgPath(designId){
-  const folder = String(designId).startsWith('B') ? 'BlackCollection' : 'WhiteCollection';
-  return `${folder}/${designId}.png`;
-}
-function escapeHtml(str){
-  const div = document.createElement('div');
-  div.textContent = str ?? '';
-  return div.innerHTML;
-}
-// This page's own URL (origin + path, no query) — sent to edge functions so
-// proof links and payment redirects always point back at wherever this file
-// is actually hosted, with no hardcoded domain to keep in sync.
-function proofBaseUrl(){ return location.origin + location.pathname; }
-
-function showToast(message, type){
-  const host = $('#toastHost');
-  const el = document.createElement('div');
-  el.className = 'toast' + (type === 'error' ? ' toast--error' : type === 'success' ? ' toast--success' : '');
-  el.textContent = message;
-  host.appendChild(el);
-  setTimeout(() => { el.style.opacity = '0'; el.style.transition = 'opacity .25s ease'; setTimeout(() => el.remove(), 260); }, 4200);
-}
-
-/* =========================================================================
-   ADMIN MODULE
-   (login / tabs / order+feedback+signup loading preserved from the original
-   admin.html; extended with Proof Management — search "NEW:" below)
-   ========================================================================= */
-let ordersCache = [];          // last-loaded orders, reused by the proof modal
-let currentProofOrder = null;  // order currently open in the Process Proof modal
-
-async function checkSession(){
-  const { data: { session } } = await sb.auth.getSession();
-  if (session) showAdmin(); else showLogin();
-}
-function showLogin(){
-  $('#loginScreen').hidden = false;
-  $('#adminScreen').hidden = true;
-}
-function showAdmin(){
-  $('#loginScreen').hidden = true;
-  $('#adminScreen').hidden = false;
-  loadOrders();
-}
-
-$('#loginBtn').addEventListener('click', async () => {
-  const email = $('#loginEmail').value.trim();
-  const password = $('#loginPassword').value;
-  $('#loginError').textContent = '';
-  const { error } = await sb.auth.signInWithPassword({ email, password });
-  if (error) {
-    $('#loginError').textContent = 'Could not log in — check your email and password.';
-    return;
-  }
-  showAdmin();
-});
-
-$('#logoutBtn').addEventListener('click', async () => {
-  await sb.auth.signOut();
-  showLogin();
-});
-
-$$('.tab-btn').forEach((btn) => {
-  btn.addEventListener('click', () => {
-    $$('.tab-btn').forEach((b) => b.classList.toggle('active', b === btn));
-    const tab = btn.dataset.tab;
-    $('#ordersPane').hidden = tab !== 'orders';
-    $('#feedbackPane').hidden = tab !== 'feedback';
-    $('#signupsPane').hidden = tab !== 'signups';
-    if (tab === 'orders') loadOrders();
-    if (tab === 'feedback') loadFeedback();
-    if (tab === 'signups') loadSignups();
-  });
-});
-
-async function loadOrders(){
-  const pane = $('#ordersPane');
-  pane.innerHTML = '<p class="empty-note">Loading orders…</p>';
-  const { data, error } = await sb.from('orders').select('*').order('created_at', { ascending: false });
-  if (error) { pane.innerHTML = `<p class="empty-note">Could not load orders — ${escapeHtml(error.message)}</p>`; return; }
-  ordersCache = data || [];
-  if (!ordersCache.length) { pane.innerHTML = '<p class="empty-note">No orders yet.</p>'; return; }
-  pane.innerHTML = ordersCache.map(renderTicket).join('');
-  // Wire up the new Process Proof buttons (event delegation would also work,
-  // but the ticket list re-renders wholesale on every load, so direct binding
-  // after each render keeps the logic easy to follow).
-  $$('.js-process-proof').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const order = ordersCache.find((o) => o.order_code === btn.dataset.orderCode);
-      if (order) openProofModal(order);
-    });
-  });
-}
-
-function statusPill(kind, value){
-  const map = {
-    proof: { 'Not Sent': ['pill--wait', 'Proof not sent'], 'Sent': ['pill--sent', 'Proof sent'] },
-    approval: {
-      'Waiting Approval': ['pill--wait', 'Waiting approval'],
-      'Approved': ['pill--approved', 'Approved'],
-      'Revision Requested': ['pill--revision', 'Revision requested'],
-      'Production': ['pill--sent', 'In production'],
-      'Completed': ['pill--ok', 'Completed'],
-    },
-    payment: {
-      'Pending': ['pill--wait', 'Payment pending'],
-      'Paid': ['pill--paid', 'Paid'],
-      'Cash on Delivery': ['pill--ok', 'Cash on delivery'],
-    },
-  };
-  const [cls, label] = (map[kind] && map[kind][value]) || ['pill--wait', value || '—'];
-  return `<span class="pill ${cls}">${escapeHtml(label)}</span>`;
-}
-
-// Original renderTicket, preserved exactly, plus a new status/proof row.
-function renderTicket(order){
-  const designsHtml = (order.designs || []).map((d) => `
-    <div class="ticket-line">
-      <img src="${designImgPath(d.design_id)}" alt="${escapeHtml(d.label)}" onerror="this.style.opacity='0.2'">
-      <div class="ticket-line-info">
-        <div class="ticket-line-name">${escapeHtml(d.label)} &middot; ${escapeHtml(d.size)} ${d.color === 'black' ? 'Black' : 'White'}</div>
-        <div class="ticket-line-meta">${d.personalize ? `&ldquo;${escapeHtml(d.personalize)}&rdquo;` : 'No custom text'}</div>
-      </div>
-      <div class="ticket-line-price">${formatPHP(d.price)}</div>
-    </div>
-  `).join('');
-
-  return `
-    <div class="cell ticket">
-      <div class="ticket-head">
-        <div>
-          <div class="ticket-code">${escapeHtml(order.order_code)}</div>
-          <div class="ticket-date">${formatDate(order.created_at)}</div>
-        </div>
-      </div>
-      <div class="ticket-body">
-        <div class="ticket-customer">
-          <strong>${escapeHtml(order.first_name)} ${escapeHtml(order.last_name)}</strong><br>
-          ${escapeHtml(order.phone)} &middot; ${escapeHtml(order.email)}${order.messenger ? ` &middot; ${escapeHtml(order.messenger)}` : ''}<br>
-          ${escapeHtml(order.address?.street)}, ${escapeHtml(order.address?.barangay)}<br>
-          ${escapeHtml(order.address?.city)}, ${escapeHtml(order.address?.province)} ${escapeHtml(order.address?.zip)}
-        </div>
-
-        <p class="ticket-section-label">Designs</p>
-        ${designsHtml}
-
-        <div class="ticket-totals">
-          <div class="row"><span>Subtotal</span><span>${formatPHP(order.subtotal)}</span></div>
-          <div class="row"><span>${order.shipping_method === 'jnt' ? 'J&T Express' : 'Lalamove'}${order.shipping_rush ? ' (Rush)' : ''}</span><span>${formatPHP(order.shipping_rate)}</span></div>
-          <div class="row row--total"><span>Total</span><span>${formatPHP(order.total)}</span></div>
-        </div>
-      </div>
-
-      <div class="ticket-proof-row">
-        <div class="status-pills">
-          ${statusPill('proof', order.proof_status)}
-          ${statusPill('approval', order.approval_status)}
-          ${statusPill('payment', order.payment_status)}
-        </div>
-        <button class="btn btn--primary btn--sm js-process-proof" type="button" data-order-code="${escapeHtml(order.order_code)}">Process Proof</button>
-      </div>
-    </div>
-  `;
-}
-
-async function loadFeedback(){
-  const pane = $('#feedbackPane');
-  pane.innerHTML = '<p class="empty-note">Loading…</p>';
-  const { data, error } = await sb.from('feedback').select('*').order('created_at', { ascending: false });
-  if (error) { pane.innerHTML = `<p class="empty-note">${escapeHtml(error.message)}</p>`; return; }
-  if (!data.length) { pane.innerHTML = '<p class="empty-note">No feedback yet.</p>'; return; }
-  pane.innerHTML = data.map((f) => `
-    <div class="cell feedback-card">
-      <p>${escapeHtml(f.message)}</p>
-      <p class="meta">${formatDate(f.created_at)}</p>
-    </div>
-  `).join('');
-}
-
-async function loadSignups(){
-  const pane = $('#signupsPane');
-  pane.innerHTML = '<p class="empty-note">Loading…</p>';
-  const { data, error } = await sb.from('email_signups').select('*').order('created_at', { ascending: false });
-  if (error) { pane.innerHTML = `<p class="empty-note">${escapeHtml(error.message)}</p>`; return; }
-  if (!data.length) { pane.innerHTML = '<p class="empty-note">No signups yet.</p>'; return; }
-  pane.innerHTML = data.map((s) => `
-    <div class="cell feedback-card">
-      <p style="font-family:var(--font-mono); font-weight:700;">${escapeHtml(s.email)}</p>
-      <p class="meta">${formatDate(s.created_at)}</p>
-    </div>
-  `).join('');
-}
-
-/* -------------------------------------------------------------------------
-   NEW: Process Proof modal
-   ------------------------------------------------------------------------- */
-function updateOrderInCache(order){
-  const i = ordersCache.findIndex((o) => o.order_code === order.order_code);
-  if (i > -1) ordersCache[i] = order;
-}
-
-// Re-renders just the one ticket in the list (swapping its DOM node) and the
-// modal body if it's the order currently open — avoids a full list refetch
-// after every small edit.
-function rerenderTicketAndModal(order){
-  const btn = $(`.js-process-proof[data-order-code="${CSS.escape(order.order_code)}"]`);
-  if (btn) {
-    const oldTicketEl = btn.closest('.ticket');
-    const wrapper = document.createElement('div');
-    wrapper.innerHTML = renderTicket(order).trim();
-    const newTicketEl = wrapper.firstElementChild;
-    oldTicketEl.replaceWith(newTicketEl);
-    newTicketEl.querySelector('.js-process-proof').addEventListener('click', () => openProofModal(order));
-  }
-  if (currentProofOrder && currentProofOrder.order_code === order.order_code) {
-    currentProofOrder = order;
-    renderProofModal(order);
-  }
-}
-
-function openProofModal(order){
-  currentProofOrder = order;
-  renderProofModal(order);
-  $('#proofModalOverlay').hidden = false;
-  document.body.style.overflow = 'hidden';
-}
-function closeProofModal(){
-  $('#proofModalOverlay').hidden = true;
-  document.body.style.overflow = '';
-  currentProofOrder = null;
-}
-$('#proofModalCloseBtn').addEventListener('click', closeProofModal);
-$('#proofModalOverlay').addEventListener('click', (e) => { if (e.target.id === 'proofModalOverlay') closeProofModal(); });
-document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !$('#proofModalOverlay').hidden) closeProofModal(); });
-
-function renderProofModal(order){
-  const body = $('#proofModalBody');
-  $('#proofModalTitle').textContent = `Process proof — ${order.order_code}`;
-
-  const mockupSection = order.proof_image_url
-    ? `
-      <div class="mockup-preview-wrap">
-        <img src="${escapeHtml(order.proof_image_url)}" alt="Uploaded mockup for ${escapeHtml(order.order_code)}">
-      </div>
-      <div class="mockup-preview-actions">
-        <button class="btn btn--ghost btn--sm btn--block" type="button" id="replaceMockupBtn">Replace image</button>
-      </div>`
-    : `
-      <label class="upload-zone" id="mockupUploadZone">
-        <div class="upload-zone-icon">🖼️</div>
-        <div style="font-weight:700; font-size:13.5px;">Upload final mockup</div>
-        <div class="field-hint">PNG or JPG, one image only</div>
-        <input type="file" id="mockupFileInput" accept="image/png,image/jpeg,image/webp">
-      </label>`;
-
-  body.innerHTML = `
-    <div class="proof-modal-section">
-      <p class="proof-modal-section-title">Order</p>
-      <dl class="proof-summary-grid">
-        <div><dt>Order code</dt><dd style="font-family:var(--font-mono);">${escapeHtml(order.order_code)}</dd></div>
-        <div><dt>Customer</dt><dd>${escapeHtml(order.first_name)} ${escapeHtml(order.last_name)}</dd></div>
-        <div><dt>Email</dt><dd style="word-break:break-all;">${escapeHtml(order.email)}</dd></div>
-        <div><dt>Phone</dt><dd>${escapeHtml(order.phone)}</dd></div>
-      </dl>
-    </div>
-
-    <div class="proof-modal-section">
-      <p class="proof-modal-section-title">Billing</p>
-      <div class="ticket-totals" style="margin-top:0; padding-top:0; border-top:none;">
-        <div class="row"><span>Subtotal</span><span>${formatPHP(order.subtotal)}</span></div>
-        <div class="row"><span>${order.shipping_method === 'jnt' ? 'J&T Express' : 'Lalamove'}${order.shipping_rush ? ' (Rush)' : ''}</span><span>${formatPHP(order.shipping_rate)}</span></div>
-        <div class="row row--total"><span>Total</span><span>${formatPHP(order.total)}</span></div>
-      </div>
-    </div>
-
-    <div class="proof-modal-section">
-      <p class="proof-modal-section-title">Products</p>
-      ${(order.designs || []).map((d) => `
-        <div class="ticket-line">
-          <img src="${designImgPath(d.design_id)}" alt="${escapeHtml(d.label)}" onerror="this.style.opacity='0.2'">
-          <div class="ticket-line-info">
-            <div class="ticket-line-name">${escapeHtml(d.label)} &middot; ${escapeHtml(d.size)} ${d.color === 'black' ? 'Black' : 'White'}</div>
-            <div class="ticket-line-meta">${d.personalize ? `&ldquo;${escapeHtml(d.personalize)}&rdquo;` : 'No custom text'}</div>
-          </div>
-          <div class="ticket-line-price">${formatPHP(d.price)}</div>
-        </div>
-      `).join('')}
-    </div>
-
-    <div class="proof-modal-section">
-      <p class="proof-modal-section-title">Upload final mockup <span class="field-hint">(only one image — replacing swaps it)</span></p>
-      ${mockupSection}
-      <div class="upload-progress" id="uploadProgressTrack" hidden><div class="upload-progress-bar" id="uploadProgressBar"></div></div>
-    </div>
-
-    <div class="proof-modal-section">
-      <p class="proof-modal-section-title">Designer notes <span class="field-hint">(optional)</span></p>
-      <textarea class="input" id="proofNotesInput" rows="4" placeholder="Notes for the customer, e.g. print placement details…">${escapeHtml(order.designer_notes || '')}</textarea>
-      <button class="btn btn--ghost btn--sm" type="button" id="saveNotesBtn" style="margin-top:10px;">Save notes</button>
-    </div>
-
-    <div class="proof-modal-section">
-      <p class="proof-modal-section-title">Preview proof <span class="field-hint">(exactly what the customer will see)</span></p>
-      <div class="proof-preview-embed">
-        ${order.proof_image_url ? renderProofBentoHTML(order, { previewMode: true }) : '<p class="empty-note">Upload a mockup to see the live preview.</p>'}
-      </div>
-    </div>
-
-    <div class="proof-modal-section">
-      <p class="proof-modal-section-title">Send to customer</p>
-      <button class="btn btn--primary btn--block" type="button" id="sendProofEmailBtn" ${order.proof_image_url ? '' : 'disabled'}>
-        ${order.proof_status === 'Sent' ? 'Resend proof email' : 'Send proof email'}
-      </button>
-      ${order.proof_sent_at ? `<p class="field-hint" style="margin-top:8px;">Last sent ${formatDate(order.proof_sent_at)}</p>` : ''}
-    </div>
-
-    <div class="proof-modal-section" style="margin-bottom:6px;">
-      <p class="proof-modal-section-title">Status</p>
-      <div class="status-select-row">
-        <div>
-          <label for="approvalStatusSelect">Approval status</label>
-          <select class="input" id="approvalStatusSelect">
-            ${['Waiting Approval','Approved','Revision Requested','Production','Completed'].map((v) => `<option value="${v}" ${order.approval_status === v ? 'selected' : ''}>${v}</option>`).join('')}
-          </select>
-        </div>
-        <div>
-          <label for="paymentStatusSelect">Payment status</label>
-          <select class="input" id="paymentStatusSelect">
-            ${['Pending','Paid','Cash on Delivery'].map((v) => `<option value="${v}" ${order.payment_status === v ? 'selected' : ''}>${v}</option>`).join('')}
-          </select>
-        </div>
-      </div>
-      ${order.revision_notes ? `<p class="field-hint" style="margin-top:12px;"><strong style="color:var(--ink);">Customer's revision request:</strong> ${escapeHtml(order.revision_notes)}</p>` : ''}
-    </div>
-  `;
-
-  // wire up section handlers
-  const uploadZone = $('#mockupUploadZone');
-  if (uploadZone) {
-    const fileInput = $('#mockupFileInput');
-    fileInput.addEventListener('change', () => { if (fileInput.files[0]) uploadMockupFile(order, fileInput.files[0]); });
-    uploadZone.addEventListener('dragover', (e) => { e.preventDefault(); uploadZone.classList.add('dragover'); });
-    uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('dragover'));
-    uploadZone.addEventListener('drop', (e) => {
-      e.preventDefault(); uploadZone.classList.remove('dragover');
-      if (e.dataTransfer.files[0]) uploadMockupFile(order, e.dataTransfer.files[0]);
-    });
-  }
-  const replaceBtn = $('#replaceMockupBtn');
-  if (replaceBtn) {
-    replaceBtn.addEventListener('click', () => {
-      const input = document.createElement('input');
-      input.type = 'file'; input.accept = 'image/png,image/jpeg,image/webp';
-      input.addEventListener('change', () => { if (input.files[0]) uploadMockupFile(order, input.files[0]); });
-      input.click();
-    });
-  }
-  $('#saveNotesBtn').addEventListener('click', () => saveDesignerNotes(order));
-  $('#sendProofEmailBtn').addEventListener('click', () => sendProofEmail(order));
-  $('#approvalStatusSelect').addEventListener('change', (e) => updateOrderStatusField(order, 'approval_status', e.target.value));
-  $('#paymentStatusSelect').addEventListener('change', (e) => updateOrderStatusField(order, 'payment_status', e.target.value));
-}
-
-function setUploadProgressUI(active){
-  $('#uploadProgressTrack').hidden = !active;
-  $('#uploadProgressBar').style.width = active ? '70%' : '0%';
-}
-
-async function uploadMockupFile(order, file){
-  if (!file.type.startsWith('image/')) { showToast('Please choose an image file.', 'error'); return; }
-  if (file.size > 8 * 1024 * 1024) { showToast('Image is larger than 8MB — please use a smaller file.', 'error'); return; }
-
-  const ext = (file.name.split('.').pop() || 'png').toLowerCase();
-  const path = `${order.order_code}/mockup.${ext}`;
-  setUploadProgressUI(true);
-
-  const { error: upErr } = await sb.storage.from('proof-mockups').upload(path, file, { upsert: true, contentType: file.type });
-  if (upErr) { setUploadProgressUI(false); showToast('Upload failed: ' + upErr.message, 'error'); return; }
-
-  const { data: pub } = sb.storage.from('proof-mockups').getPublicUrl(path);
-  const publicUrl = `${pub.publicUrl}?v=${Date.now()}`; // cache-bust so a replaced image shows immediately
-
-  const nowIso = new Date().toISOString();
-  const { error: updErr } = await sb.from('orders')
-    .update({ proof_image_url: publicUrl, last_updated: nowIso })
-    .eq('order_code', order.order_code);
-
-  setUploadProgressUI(false);
-  if (updErr) { showToast('Image uploaded but failed to link it to the order: ' + updErr.message, 'error'); return; }
-
-  order.proof_image_url = publicUrl;
-  order.last_updated = nowIso;
-  updateOrderInCache(order);
-  rerenderTicketAndModal(order);
-  showToast('Mockup uploaded.', 'success');
-}
-
-async function saveDesignerNotes(order){
-  const val = $('#proofNotesInput').value;
-  const nowIso = new Date().toISOString();
-  const { error } = await sb.from('orders').update({ designer_notes: val, last_updated: nowIso }).eq('order_code', order.order_code);
-  if (error) { showToast('Could not save notes: ' + error.message, 'error'); return; }
-  order.designer_notes = val;
-  order.last_updated = nowIso;
-  updateOrderInCache(order);
-  showToast('Notes saved.', 'success');
-}
-
-async function updateOrderStatusField(order, field, value){
-  const nowIso = new Date().toISOString();
-  const { error } = await sb.from('orders').update({ [field]: value, last_updated: nowIso }).eq('order_code', order.order_code);
-  if (error) { showToast('Could not update status: ' + error.message, 'error'); return; }
-  order[field] = value;
-  order.last_updated = nowIso;
-  updateOrderInCache(order);
-  rerenderTicketAndModal(order);
-  showToast('Status updated.', 'success');
-}
-
-// Calls the send-proof-email Edge Function (see /supabase/functions/send-proof-email).
-// Never marks the email as sent unless the provider actually accepted it.
-async function sendProofEmail(order){
-  if (!order.proof_image_url) { showToast('Upload the final mockup before sending.', 'error'); return; }
-  const btn = $('#sendProofEmailBtn');
-  const originalLabel = btn.textContent;
-  btn.disabled = true;
-  btn.innerHTML = '<span class="spinner"></span> Sending…';
-
-  try {
-    const { data: { session } } = await sb.auth.getSession();
-    const resp = await fetch(`${EDGE_FUNCTIONS_BASE}/send-proof-email`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${session?.access_token || SUPABASE_ANON_KEY}`,
-        'apikey': SUPABASE_ANON_KEY,
-      },
-      body: JSON.stringify({ order_code: order.order_code, proof_base_url: proofBaseUrl() }),
-    });
-    const result = await resp.json().catch(() => ({}));
-
-    if (!resp.ok || result.error) {
-      showToast(result.error || 'Could not send the proof email.', 'error');
-      return;
-    }
-    if (result.warning) showToast(result.warning, 'error');
-
-    order.proof_status = 'Sent';
-    order.proof_sent_at = result.sent_at;
-    updateOrderInCache(order);
-    rerenderTicketAndModal(order);
-    showToast(`Proof email sent to ${order.email}.`, 'success');
-  } catch (err) {
-    showToast('Network error while sending: ' + err.message, 'error');
-  } finally {
-    btn.disabled = false;
-    btn.textContent = originalLabel;
-  }
-}
-
-/* =========================================================================
-   SHARED: renderProofBentoHTML(order, opts)
-   ------------------------------------------------------------------------
-   The Bento/Glass proof layout itself. Used verbatim in two places:
-     1. The admin's "Preview Proof" panel (previewMode:true — actions shown
-        disabled, nothing is clickable, matching "the preview should use the
-        same UI as the future proof page").
-     2. The live customer Proof Portal (previewMode:false — wireProofActions
-        attaches the real Approve/Revision/Payment handlers after insertion).
-   Keeping this in one function means the two can never visually drift apart.
-   ========================================================================= */
-function getProgressSteps(order){
-  const steps = [
-    { label: 'Proof Ready' },
-    { label: order.approval_status === 'Revision Requested' ? 'Revision Requested' : 'Approved' },
-    { label: 'Payment Received' },
-    { label: 'Production' },
-    { label: 'Completed' },
-  ];
-  let currentIndex = 0;
-  if (order.approval_status === 'Waiting Approval') currentIndex = 0;
-  else if (order.approval_status === 'Revision Requested') currentIndex = 1;
-  else if (order.approval_status === 'Approved') currentIndex = (order.payment_status === 'Paid' || order.payment_status === 'Cash on Delivery') ? 2 : 1;
-  else if (order.approval_status === 'Production') currentIndex = 3;
-  else if (order.approval_status === 'Completed') currentIndex = 4;
-
-  return steps.map((s, i) => ({
-    ...s,
-    state: (order.approval_status === 'Revision Requested' && i === 1) ? 'current'
-      : i < currentIndex ? 'done'
-      : i === currentIndex ? 'current'
-      : 'upcoming',
-  }));
-}
-
-function renderProofBentoHTML(order, opts){
-  const previewMode = !!(opts && opts.previewMode);
-  const fullName = `${order.first_name || ''} ${order.last_name || ''}`.trim();
-  const steps = getProgressSteps(order);
-
-  const trackerHtml = steps.map((s) => `
-    <div class="pp-track-step ${s.state === 'done' ? 'is-done' : ''} ${s.state === 'current' ? 'is-current' : ''}">
-      <div class="pp-track-dot"></div>
-      <div class="pp-track-label">${escapeHtml(s.label)}</div>
-    </div>
-  `).join('');
-
-  const productsHtml = (order.designs || []).map((d) => `
-    <div class="pp-product-row">
-      <img src="${designImgPath(d.design_id)}" alt="${escapeHtml(d.label)}" onerror="this.style.opacity='0.2'">
-      <div>
-        <div class="pp-product-name">${escapeHtml(d.label)} &middot; ${escapeHtml(d.size)} ${d.color === 'black' ? 'Black' : 'White'}</div>
-        <div class="pp-product-meta">${d.personalize ? `&ldquo;${escapeHtml(d.personalize)}&rdquo;` : 'No custom text'}</div>
-      </div>
-    </div>
-  `).join('');
-
-  const canApprove = order.approval_status === 'Waiting Approval';
-  const canPay = order.approval_status === 'Approved' && order.payment_status !== 'Paid' && order.payment_status !== 'Cash on Delivery';
-  const isPaid = order.payment_status === 'Paid' || order.payment_status === 'Cash on Delivery';
-  const isRevisionPending = order.approval_status === 'Revision Requested';
-
-  let actionsInnerHtml;
-  if (previewMode) {
-    actionsInnerHtml = `
-      <p class="pp-sub" style="margin-bottom:14px;">Preview only — the customer will see live, working buttons here.</p>
-      <div class="pp-actions-stack">
-        <button class="pp-btn pp-btn--primary" type="button" disabled>Approve Design</button>
-        <button class="pp-btn pp-btn--outline" type="button" disabled>Request Revision</button>
-      </div>`;
-  } else if (isRevisionPending) {
-    actionsInnerHtml = `
-      <p class="pp-sub">Your revision request has been submitted. We'll notify you when the updated proof is ready.</p>
-      ${order.revision_notes ? `<p class="pp-notes" style="margin-top:12px;">"${escapeHtml(order.revision_notes)}"</p>` : ''}`;
-  } else if (canApprove) {
-    actionsInnerHtml = `
-      <div class="pp-actions-stack">
-        <button class="pp-btn pp-btn--primary" type="button" id="ppApproveBtn">Approve Design</button>
-        <button class="pp-btn pp-btn--outline" type="button" id="ppRequestRevisionBtn">Request Revision</button>
-      </div>`;
-  } else if (canPay) {
-    actionsInnerHtml = `
-      <p class="pp-sub" style="margin-bottom:14px;">Design approved once, and we mean it — nice choice. Continue to payment when you're ready.</p>
-      <div class="pp-actions-stack">
-        <button class="pp-btn pp-btn--primary" type="button" id="ppPayBtn">Continue to Payment</button>
-      </div>`;
-  } else if (isPaid) {
-    actionsInnerHtml = `
-      <p class="pp-sub">${order.payment_status === 'Cash on Delivery' ? 'Your order has been marked for Cash on Delivery.' : 'Payment confirmed. Your order has entered production.'}</p>`;
-  } else {
-    actionsInnerHtml = `<p class="pp-sub">Track Progress — status updates will appear here.</p>`;
-  }
-
-  return `
-    <div class="pp-card pp-glass pp-span-7 pp-hero-card" ${previewMode ? '' : 'id="ppHeroCard"'}>
-      <div class="pp-hero-img-wrap">
-        <img src="${escapeHtml(order.proof_image_url)}" alt="Your Typic Studio design proof" loading="lazy" ${previewMode ? '' : 'id="ppHeroImg"'}>
-      </div>
-      <div class="pp-hero-caption">Tap to zoom</div>
-    </div>
-
-    <div class="pp-card pp-glass pp-span-5">
-      <p class="pp-card-label">Progress</p>
-      <div class="pp-tracker">${trackerHtml}</div>
-    </div>
-
-    <div class="pp-card pp-glass pp-span-4">
-      <p class="pp-card-label">Order</p>
-      <div class="pp-kv"><span>Order code</span><strong style="font-family:var(--font-mono);">${escapeHtml(order.order_code)}</strong></div>
-      <div class="pp-kv"><span>Customer</span><strong>${escapeHtml(fullName)}</strong></div>
-      <div class="pp-kv"><span>Placed</span><strong>${formatDate(order.created_at)}</strong></div>
-    </div>
-
-    <div class="pp-card pp-glass pp-span-4">
-      <p class="pp-card-label">Billing summary</p>
-      <div class="pp-kv"><span>Subtotal</span><strong>${formatPHP(order.subtotal)}</strong></div>
-      <div class="pp-kv"><span>${order.shipping_method === 'jnt' ? 'J&T Express' : 'Lalamove'}${order.shipping_rush ? ' (Rush)' : ''}</span><strong>${formatPHP(order.shipping_rate)}</strong></div>
-      <div class="pp-kv pp-kv--total"><span>Total</span><strong>${formatPHP(order.total)}</strong></div>
-    </div>
-
-    <div class="pp-card pp-glass pp-span-4">
-      <p class="pp-card-label">Designer notes</p>
-      <p class="pp-notes">${order.designer_notes ? escapeHtml(order.designer_notes) : 'No additional notes from your designer.'}</p>
-      <p class="pp-sub" style="margin-top:10px; font-size:12px;">Changes after approval may require additional charges.</p>
-    </div>
-
-    <div class="pp-card pp-glass pp-span-12">
-      <p class="pp-card-label">What you ordered</p>
-      ${productsHtml || '<p class="pp-sub">No line items found for this order.</p>'}
-    </div>
-
-    <div class="pp-card pp-glass pp-span-12">
-      <p class="pp-card-label">Next step</p>
-      ${actionsInnerHtml}
-    </div>
-  `;
-}
-
-/* =========================================================================
-   CUSTOMER PROOF PORTAL MODULE
-   Active when the page URL includes ?order=ORDER_CODE — see router at the
-   bottom of this file. Talks to Supabase only through the narrow,
-   security-definer functions set up for this (get_order_proof,
-   approve_proof, request_proof_revision, set_cod_payment), plus the
-   create-paymongo-checkout Edge Function for online payments — never reads
-   or writes the orders table directly, since this runs fully logged-out.
-   ========================================================================= */
-let currentPublicOrder = null;
-
-async function initProofPortal(orderCode){
-  const { data, error } = await sb.rpc('get_order_proof', { p_order_code: orderCode });
-
-  if (error || !data || !data.length) {
-    $('#ppSkeleton').hidden = true;
-    $('#ppErrorState').hidden = false;
-    $('#ppErrorTitle').textContent = "We couldn't find that proof";
-    $('#ppErrorMessage').textContent = "This link may be mistyped, or your proof isn't ready yet. Please check the link Typic Studio sent you, or reach out if you think this is a mistake.";
-    return;
-  }
-
-  currentPublicOrder = data[0];
-  renderProofPortal(currentPublicOrder);
-}
-
-function renderProofPortal(order){
-  $('#ppSkeleton').hidden = true;
-  $('#ppErrorState').hidden = true;
-  $('#ppMain').hidden = false;
-  $('#ppOrderChip').textContent = order.order_code;
-  $('#ppBento').innerHTML = renderProofBentoHTML(order, { previewMode: false });
-  wireProofActions(order);
-  handlePaymentReturn(order);
-}
-
-function wireProofActions(order){
-  const heroImg = $('#ppHeroImg');
-  if (heroImg) heroImg.addEventListener('click', () => openLightbox(order.proof_image_url));
-
-  const approveBtn = $('#ppApproveBtn');
-  if (approveBtn) approveBtn.addEventListener('click', () => { $('#ppApproveOverlay').hidden = false; });
-
-  const revisionBtn = $('#ppRequestRevisionBtn');
-  if (revisionBtn) revisionBtn.addEventListener('click', () => {
-    $('#ppRevisionNotes').value = '';
-    $('#ppRevisionError').textContent = '';
-    $('#ppRevisionOverlay').hidden = false;
-  });
-
-  const payBtn = $('#ppPayBtn');
-  if (payBtn) payBtn.addEventListener('click', () => openPaymentModal());
-}
-
-/* ---- lightbox ---- */
-function openLightbox(src){
-  $('#ppLightboxImg').src = src;
-  $('#ppLightbox').hidden = false;
-}
-function closeLightbox(){ $('#ppLightbox').hidden = true; }
-$('#ppLightboxClose').addEventListener('click', closeLightbox);
-$('#ppLightbox').addEventListener('click', (e) => { if (e.target.id === 'ppLightbox') closeLightbox(); });
-
-/* ---- approve ---- */
-$('#ppApproveCancel').addEventListener('click', () => { $('#ppApproveOverlay').hidden = true; });
-$('#ppApproveOverlay').addEventListener('click', (e) => { if (e.target.id === 'ppApproveOverlay') $('#ppApproveOverlay').hidden = true; });
-$('#ppApproveConfirm').addEventListener('click', async () => {
-  const btn = $('#ppApproveConfirm');
-  btn.disabled = true; btn.innerHTML = '<span class="spinner"></span> Approving…';
-  const { error } = await sb.rpc('approve_proof', { p_order_code: currentPublicOrder.order_code });
-  btn.disabled = false; btn.textContent = 'Approve design';
-  if (error) { showToast('Could not approve the design — please try again.', 'error'); return; }
-  $('#ppApproveOverlay').hidden = true;
-  currentPublicOrder.approval_status = 'Approved';
-  renderProofPortal(currentPublicOrder);
-  showToast('Design approved successfully. You may now complete payment.', 'success');
-});
-
-/* ---- revision ---- */
-$('#ppRevisionCancel').addEventListener('click', () => { $('#ppRevisionOverlay').hidden = true; });
-$('#ppRevisionOverlay').addEventListener('click', (e) => { if (e.target.id === 'ppRevisionOverlay') $('#ppRevisionOverlay').hidden = true; });
-$('#ppRevisionSubmit').addEventListener('click', async () => {
-  const notes = $('#ppRevisionNotes').value.trim();
-  if (!notes) { $('#ppRevisionError').textContent = 'Please describe what you\'d like changed.'; return; }
-  const btn = $('#ppRevisionSubmit');
-  btn.disabled = true; btn.innerHTML = '<span class="spinner"></span> Submitting…';
-  const { error } = await sb.rpc('request_proof_revision', { p_order_code: currentPublicOrder.order_code, p_notes: notes });
-  btn.disabled = false; btn.textContent = 'Submit revision';
-  if (error) { $('#ppRevisionError').textContent = 'Something went wrong — please try again.'; return; }
-  $('#ppRevisionOverlay').hidden = true;
-  currentPublicOrder.approval_status = 'Revision Requested';
-  currentPublicOrder.revision_notes = notes;
-  renderProofPortal(currentPublicOrder);
-  showToast("Your revision request has been submitted. We'll notify you when the updated proof is ready.", 'success');
-});
-
-/* ---- payment ---- */
-let selectedPaymentMethod = null;
-
-function openPaymentModal(){
-  selectedPaymentMethod = null;
-  $('#ppPaymentError').textContent = '';
-  $('#ppPaymentSubmit').disabled = true;
-  $$('.pp-payment-opt').forEach((el) => el.classList.remove('is-selected'));
-  $('#ppPaymentOverlay').hidden = false;
-}
-$('#ppPaymentCancel').addEventListener('click', () => { $('#ppPaymentOverlay').hidden = true; });
-$('#ppPaymentOverlay').addEventListener('click', (e) => { if (e.target.id === 'ppPaymentOverlay') $('#ppPaymentOverlay').hidden = true; });
-$('#ppPaymentGrid').addEventListener('click', (e) => {
-  const opt = e.target.closest('.pp-payment-opt');
-  if (!opt) return;
-  $$('.pp-payment-opt').forEach((el) => el.classList.toggle('is-selected', el === opt));
-  selectedPaymentMethod = opt.dataset.method;
-  $('#ppPaymentSubmit').disabled = false;
-  $('#ppPaymentError').textContent = '';
-});
-
-$('#ppPaymentSubmit').addEventListener('click', async () => {
-  if (!selectedPaymentMethod) return;
-  const btn = $('#ppPaymentSubmit');
-  btn.disabled = true; btn.innerHTML = '<span class="spinner"></span> Please wait…';
-  $('#ppPaymentError').textContent = '';
-
-  try {
-    if (selectedPaymentMethod === 'cod') {
-      const { error } = await sb.rpc('set_cod_payment', { p_order_code: currentPublicOrder.order_code });
-      if (error) throw new Error('Payment could not be completed. Please try again or choose another payment method.');
-      $('#ppPaymentOverlay').hidden = true;
-      currentPublicOrder.payment_status = 'Cash on Delivery';
-      renderProofPortal(currentPublicOrder);
-      showToast('Your order has been marked for Cash on Delivery.', 'success');
-      return;
-    }
-
-    const resp = await fetch(`${EDGE_FUNCTIONS_BASE}/create-paymongo-checkout`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-        'apikey': SUPABASE_ANON_KEY,
-      },
-      body: JSON.stringify({
-        order_code: currentPublicOrder.order_code,
-        payment_method: selectedPaymentMethod,
-        proof_base_url: proofBaseUrl(),
-      }),
-    });
-    const result = await resp.json().catch(() => ({}));
-    if (!resp.ok || result.error || !result.checkout_url) {
-      throw new Error(result.error || 'Payment could not be completed. Please try again or choose another payment method.');
-    }
-    window.location.href = result.checkout_url; // PayMongo hosted checkout
-  } catch (err) {
-    $('#ppPaymentError').textContent = err.message;
-    btn.disabled = false; btn.textContent = 'Continue';
-  }
-});
-
-/* ---- return trip from PayMongo's hosted checkout ---- */
-function handlePaymentReturn(order){
-  const params = new URLSearchParams(location.search);
-  if (params.get('payment') !== 'success') return;
-
-  const banner = $('#ppPaymentBanner');
-  if (order.payment_status === 'Paid') {
-    banner.innerHTML = `<div class="pp-banner pp-banner--success">✓ Payment confirmed. Your order has entered production.</div>`;
-    return;
-  }
-
-  banner.innerHTML = `<div class="pp-banner pp-banner--pending">⏳ Confirming your payment — this can take a minute. This page will update automatically.</div>`;
-  // The webhook that flips payment_status to "Paid" can land a few seconds
-  // after PayMongo redirects back here, so give it one delayed re-check
-  // rather than leaving the customer stuck on a "pending" banner forever.
-  setTimeout(async () => {
-    const { data } = await sb.rpc('get_order_proof', { p_order_code: order.order_code });
-    if (data && data.length && data[0].payment_status === 'Paid') {
-      currentPublicOrder = data[0];
-      renderProofPortal(currentPublicOrder);
-    }
-  }, 4000);
-}
-
-/* =========================================================================
-   ROUTER
-   Same file, two experiences: a normal visit shows the admin login/
-   dashboard exactly as before; a visit with ?order=CODE shows the
-   glassmorphic customer proof view instead — this is what the proof email's
-   "View Your Proof" button links to.
-   ========================================================================= */
-(function router(){
-  const params = new URLSearchParams(location.search);
-  const orderParam = (params.get('order') || '').trim();
-
-  if (orderParam) {
-    $('#adminRoot').style.display = 'none';
-    $('#onesignal-notify-btn').style.display = 'none';
-    $('#proofPortal').classList.add('is-active');
-    initProofPortal(orderParam);
-  } else {
-    checkSession();
-  }
-})();
-</script>
-
-<!-- Floating Notification Button wiring (preserved) -->
 <script>
   document.getElementById('onesignal-notify-btn').addEventListener('click', function() {
     alert('Button click registered!');
