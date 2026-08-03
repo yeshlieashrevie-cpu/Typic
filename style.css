@@ -549,6 +549,7 @@ img{ max-width:100%; display:block; }
 .summary-row--total{ font-family: var(--font-display); font-weight:700; }
 
 .rush-row{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom: 14px; }
+.rush-row[hidden]{ display:none; }
 .switch input{ position:absolute; opacity:0; width:1px; height:1px; }
 .switch-track{ display:block; width:46px; height:27px; border-radius:999px; background: var(--line); position:relative; transition: background .2s ease; }
 .switch-thumb{ position:absolute; top:3px; left:3px; width:21px; height:21px; border-radius:50%; background:#fff; box-shadow: 0 2px 5px rgba(0,0,0,0.4); transition: transform .2s ease; }
@@ -566,6 +567,25 @@ img{ max-width:100%; display:block; }
 .ship-courier{ font-family: var(--font-display); font-weight:700; font-size: 14.5px; }
 .ship-rate{ font-family: var(--font-mono); font-weight:600; font-size: 13.5px; }
 .ship-eta{ display:block; margin-top: 4px; font-size: 12px; color: var(--ink-soft); }
+
+/* Pickup callout — gradient-bordered note that appears when Pickup is selected */
+.pickup-note{
+  margin-top: 12px;
+  padding: 14px 16px;
+  border-radius: var(--r-sm);
+  border: 1.5px solid transparent;
+  background: linear-gradient(var(--near-black), var(--near-black)) padding-box, var(--gradient-primary) border-box;
+  display:flex; gap:10px; align-items:flex-start;
+}
+.pickup-note[hidden]{ display:none; }
+.pickup-note-icon{
+  flex-shrink:0; width:24px; height:24px; margin-top:1px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  background: var(--gradient-primary); color:#fff;
+  box-shadow: 0 0 12px -2px rgba(255,110,50,0.6);
+}
+.pickup-note p{ margin:0; font-size:12.5px; line-height:1.5; color: var(--ink-soft); }
+.pickup-note strong{ color: var(--ink); font-weight:700; }
 
 .total-card{
   display:flex; justify-content:space-between; align-items:center;
