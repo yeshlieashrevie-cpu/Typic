@@ -47,6 +47,12 @@
   --font-display: "Bricolage Grotesque", ui-sans-serif, sans-serif;
   --font-body:    "Manrope", ui-sans-serif, sans-serif;
   --font-mono:    "IBM Plex Mono", ui-monospace, monospace;
+
+  /* App content width — the single source of truth for how wide the topbar,
+     main content, cart dock, and bottom sheet all are. Grows at the
+     breakpoints below so the whole app feels considered on desktop, not just
+     stretched mobile. */
+  --container-w: 640px;
 }
 
 /* =========================================================
@@ -119,15 +125,23 @@ img{ max-width:100%; display:block; }
 
 /* =========================================================
    TOP BAR
+   .topbar spans the full viewport (background/blur bleeds edge to edge);
+   .topbar-inner is the part that lines up with the app content width,
+   same as #app / .cart-dock / .sheet below.
 ========================================================= */
 .topbar{
   position: sticky; top:0; z-index: 40;
-  display:flex; align-items:center; justify-content:space-between; gap:12px;
   padding: 14px 18px;
   background: rgba(0,0,0,0.78);
   backdrop-filter: blur(16px) saturate(160%);
   -webkit-backdrop-filter: blur(16px) saturate(160%);
   border-bottom: 1px solid var(--line);
+}
+.topbar-inner{
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+  max-width: var(--container-w);
+  margin: 0 auto;
+  transition: max-width .25s ease;
 }
 .brand{ display:flex; align-items:center; }
 .brand-mark{
@@ -157,7 +171,7 @@ img{ max-width:100%; display:block; }
 /* =========================================================
    SCREENS
 ========================================================= */
-#app{ max-width: 640px; margin:0 auto; padding: 18px 18px 48px; }
+#app{ max-width: var(--container-w); margin:0 auto; padding: 18px 18px 48px; transition: max-width .25s ease; }
 .screen{ display:none; animation: screen-in .45s cubic-bezier(.2,.7,.3,1); }
 .screen.active{ display:block; }
 @keyframes screen-in{ from{ opacity:0; transform: translateY(10px); } to{ opacity:1; transform:none; } }
@@ -302,7 +316,10 @@ img{ max-width:100%; display:block; }
 ========================================================= */
 .hero-media {
   position: relative;
-  height: 300px;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  min-height: 220px;
+  max-height: 340px;
   overflow: hidden;
   background-color: #000;
   display: flex;
@@ -316,6 +333,7 @@ img{ max-width:100%; display:block; }
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center 20%;
   z-index: 0;
 }
 
@@ -478,13 +496,14 @@ img{ max-width:100%; display:block; }
 ========================================================= */
 .cart-dock{
   position: fixed; left:0; right:0; bottom:0; z-index: 30;
-  max-width: 640px; margin: 0 auto;
+  max-width: var(--container-w); margin: 0 auto;
   padding: 12px 18px calc(14px + env(safe-area-inset-bottom));
   background: rgba(0,0,0,0.86);
   backdrop-filter: blur(18px) saturate(160%);
   -webkit-backdrop-filter: blur(18px) saturate(160%);
   border-top: 1px solid var(--line);
   display:flex; align-items:center; gap:12px;
+  transition: max-width .25s ease;
 }
 .cart-strip{
   flex:1; display:flex; gap:8px; overflow-x:auto; scroll-snap-type: x proximity;
@@ -568,7 +587,8 @@ img{ max-width:100%; display:block; }
 .ship-rate{ font-family: var(--font-mono); font-weight:600; font-size: 13.5px; }
 .ship-eta{ display:block; margin-top: 4px; font-size: 12px; color: var(--ink-soft); }
 
-/* Pickup callout — gradient-bordered note that appears when Pickup is selected */
+/* Pickup callout — gradient-bordered note that appears when Pickup is selected.
+   Reused as-is on the details screen in place of the address block. */
 .pickup-note{
   margin-top: 12px;
   padding: 14px 16px;
@@ -605,6 +625,12 @@ img{ max-width:100%; display:block; }
 .input:focus{ border-color: var(--cornflower); }
 .input::placeholder{ color: var(--ink-faint); }
 .form-error{ color: var(--glow-2); min-height: 16px; }
+
+/* Address block — a transparent wrapper so its child .cell elements still
+   act as direct grid items inside .details-bento. When Pickup is selected,
+   the whole thing (and every input inside it) disappears in one step. */
+.address-fields{ display:contents; }
+.address-fields.is-hidden{ display:none; }
 
 /* =========================================================
    CONFIRMATION
@@ -659,11 +685,11 @@ img{ max-width:100%; display:block; }
 ========================================================= */
 .sheet-backdrop{ position:fixed; inset:0; background: rgba(0,0,0,0.6); z-index:60; backdrop-filter: blur(2px); }
 .sheet{
-  position:fixed; left:0; right:0; bottom:0; z-index:61; max-width:640px; margin:0 auto;
+  position:fixed; left:0; right:0; bottom:0; z-index:61; max-width: var(--container-w); margin:0 auto;
   background: var(--near-black); border-radius: 26px 26px 0 0; padding: 10px 20px calc(22px + env(safe-area-inset-bottom));
   box-shadow: 0 -20px 50px -20px rgba(0,0,0,0.8);
   border-top: 1px solid var(--line);
-  transform: translateY(0); transition: transform .3s cubic-bezier(.2,.8,.3,1);
+  transform: translateY(0); transition: transform .3s cubic-bezier(.2,.8,.3,1), max-width .25s ease;
 }
 .sheet[hidden]{ display:none; }
 .sheet-handle{ width:36px; height:4px; border-radius:3px; background: var(--line); margin: 4px auto 14px; }
@@ -715,12 +741,33 @@ img{ max-width:100%; display:block; }
 .toast.show{ opacity:1; transform: translate(-50%, 0); }
 
 /* =========================================================
-   RESPONSIVE — larger phones / small tablets
+   RESPONSIVE — tablets & desktop
+   The layout doesn't change shape at these breakpoints — it's the same
+   bento system throughout. What scales is --container-w (so the topbar,
+   content, cart dock, and sheet all widen together), the design library's
+   column count, and the hero video's height ceiling.
 ========================================================= */
 @media (min-width: 720px){
+  :root{ --container-w: 720px; }
   #app{ padding-top: 26px; }
-  .hero-media{ height: 360px; }
+  .hero-media{ max-height: 420px; }
   .fabric-grid{ max-width: 420px; }
+}
+
+@media (min-width: 900px){
+  :root{ --container-w: 840px; }
+  .library-grid{ grid-template-columns: repeat(4, 1fr); }
+}
+
+@media (min-width: 1200px){
+  :root{ --container-w: 1040px; }
+  .hero-media{ max-height: 520px; }
+  .hero-title{ font-size: 3.1rem; }
+  .library-grid{ grid-template-columns: repeat(5, 1fr); }
+}
+
+@media (min-width: 1440px){
+  :root{ --container-w: 1160px; }
 }
 
 .step-image {
@@ -754,12 +801,6 @@ img{ max-width:100%; display:block; }
   
   position: relative;
   overflow: hidden;
-}
-.hero-video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 20%;
 }
 
 .design-card img,
