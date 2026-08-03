@@ -13,7 +13,6 @@ const CONFIG = {
   SHIPPING_ENDPOINT: '/api/shipping-rates',
   JNT_BASE_RATE: 120,
   LALAMOVE_BASE_RATE: 280,
-  PICKUP_RATE: 0, // in-person pickup, no courier fee
 
   MIN_LOADER_MS: 1200,
 };
@@ -29,16 +28,16 @@ const CONFIG = {
     shirt_color text,      -- no longer used — size+colour now live per design below
     designs jsonb,          -- each entry: { design_id, label, personalize, price, size, color }
     subtotal numeric,
-    shipping_method text,   -- 'jnt' | 'lalamove' | 'pickup'
+    shipping_method text,
     shipping_rush boolean,
-    shipping_rate numeric,  -- 0 for pickup
+    shipping_rate numeric,
     total numeric,
     first_name text,
     last_name text,
     phone text,
     email text,
     messenger text,
-    address jsonb            -- null when shipping_method is 'pickup'
+    address jsonb
   );
 
   create table feedback (
@@ -52,10 +51,6 @@ const CONFIG = {
     created_at timestamptz default now(),
     email text
   );
-
-  -- No schema changes needed for Pickup: shipping_method already stores free
-  -- text and shipping_rate is already numeric, so 'pickup' + 0 slot right in.
-  -- address is stored as null for pickup orders (no delivery address collected).
 */
 
 /* =========================================================
@@ -99,9 +94,6 @@ const BACK_MAP = {
   review: 'library',
   details: 'review',
 };
-
-// Delivery-address input ids — toggled off entirely when Pickup is selected.
-const ADDRESS_FIELD_IDS = ['addrStreet', 'addrBarangay', 'addrCity', 'addrProvince', 'addrZip'];
 
 /* =========================================================
    STATE
@@ -155,6 +147,13 @@ function updateCartItemPersonalize(designId, personalize) {
   const item = state.cart.find((i) => i.designId === designId);
   if (item) {
     item.personalize = personalize;
+  }
+}
+
+function updateCartItemIncluded(designId, included) {
+  const item = state.cart.find((i) => i.designId === designId);
+  if (item) {
+    item.included = included;
   }
 }
 
@@ -214,19 +213,16 @@ const dom = {
   summaryList: $('#summaryList'),
   subtotalAmt: $('#subtotalAmt'),
   totalAmt: $('#totalAmt'),
+  rushToggle: $('#rushToggle'),
   shipOptions: $('#shipOptions'),
   jntRateEl: $('#jntRate'),
   jntEtaEl: $('#jntEta'),
   lalamoveRateEl: $('#lalamoveRate'),
   lalamoveEtaEl: $('#lalamoveEta'),
-  pickupRateEl: $('#pickupRate'),
-  pickupNote: $('#pickupNote'),
   rateNote: $('#rateNote'),
   continueReviewBtn: $('#continueReviewBtn'),
 
   detailsForm: $('#detailsForm'),
-  addressFields: $('#addressFields'),
-  pickupDetailsNote: $('#pickupDetailsNote'),
   formError: $('#formError'),
   submitOrderBtn: $('#submitOrderBtn'),
 
@@ -300,27 +296,6 @@ function getShippingSelection() {
   return checked ? checked.value : 'jnt';
 }
 
-// Single source of truth for "is this a pickup order?" — used by both the
-// review screen and the details screen (to decide whether to ask for an address).
-function isPickupSelected() {
-  return getShippingSelection() === 'pickup';
-}
-
-function shippingLabel(method) {
-  if (method === 'jnt') return 'J&T Express';
-  if (method === 'pickup') return 'Pickup';
-  return 'Lalamove';
-}
-
-function getShippingCost(method) {
-  if (method === 'pickup') return CONFIG.PICKUP_RATE;
-  const rates = state.shippingRates || {
-    jnt: { rate: CONFIG.JNT_BASE_RATE },
-    lalamove: { rate: CONFIG.LALAMOVE_BASE_RATE },
-  };
-  return rates[method] ? rates[method].rate : 0;
-}
-
 /* =========================================================
    NAVIGATION
    ========================================================= */
@@ -335,10 +310,6 @@ function goTo(name) {
 
   if (name !== 'library') {
     closeAddedPopup();
-  }
-
-  if (name === 'details') {
-    updateAddressFieldsVisibility();
   }
 
   if (name === 'home' || name === 'done' || name === 'feedback') {
@@ -685,7 +656,6 @@ function buildReviewScreen() {
   renderDots();
   renderSummary();
   loadShippingRates();
-  updateShippingVisibility();
 }
 
 function renderCarouselSlide() {
@@ -712,6 +682,9 @@ function renderCarouselSlide() {
   const controls = document.createElement('div');
   controls.className = 'slide-controls';
   controls.innerHTML = `
+    <label class="slide-checkbox">
+      <input type="checkbox" id="includeCheckbox" ${item.included ? 'checked' : ''} aria-label="Include this design in my order">
+    </label>
     <span class="slide-price">${priceLabel}</span>
   `;
   slide.appendChild(controls);
@@ -736,6 +709,15 @@ function renderDots() {
     dot.className = 'dot' + (i === state.reviewIndex ? ' active' : '');
     dom.carouselDots.appendChild(dot);
   });
+}
+
+function handleCarouselChange(e) {
+  if (e.target.id !== 'includeCheckbox') return;
+  const item = state.cart[state.reviewIndex];
+  if (item) {
+    updateCartItemIncluded(item.designId, e.target.checked);
+  }
+  renderSummary();
 }
 
 function handlePrevBtn() {
@@ -781,7 +763,11 @@ function updatePricing() {
   dom.subtotalAmt.textContent = formatPHP(subtotal);
 
   const method = getShippingSelection();
-  const shippingCost = getShippingCost(method);
+  const rates = state.shippingRates || {
+    jnt: { rate: CONFIG.JNT_BASE_RATE },
+    lalamove: { rate: CONFIG.LALAMOVE_BASE_RATE },
+  };
+  const shippingCost = rates[method] ? rates[method].rate : 0;
   dom.totalAmt.textContent = formatPHP(subtotal + shippingCost);
 
   dom.continueReviewBtn.disabled = includedCount === 0;
@@ -791,17 +777,32 @@ function updatePricing() {
    SHIPPING
    ========================================================= */
 
-// Shows the pickup guidance and hides the courier estimate note when Pickup
-// is selected.
-function updateShippingVisibility() {
-  const isPickup = isPickupSelected();
-
-  dom.pickupNote.hidden = !isPickup;
-  dom.rateNote.hidden = isPickup;
+function handleShippingChange() {
+  updatePricing();
 }
 
-function handleShippingChange() {
-  updateShippingVisibility();
+function handleRushToggle() {
+  const jntCard = $('.ship-card[data-courier="jnt"]', dom.shipOptions);
+  const jntRadio = $('input[value="jnt"]', dom.shipOptions);
+  const lalamoveRadio = $('input[value="lalamove"]', dom.shipOptions);
+
+  if (dom.rushToggle.checked) {
+    lalamoveRadio.checked = true;
+    jntRadio.disabled = true;
+    if (jntCard) {
+      jntCard.style.opacity = '0.45';
+      jntCard.style.pointerEvents = 'none';
+    }
+    dom.rateNote.textContent = 'Rush picked &mdash; Lalamove only. Final rate is confirmed at your delivery address.';
+  } else {
+    jntRadio.disabled = false;
+    if (jntCard) {
+      jntCard.style.opacity = '';
+      jntCard.style.pointerEvents = '';
+    }
+    dom.rateNote.textContent = 'Rates shown are estimates. Final rate is confirmed at your delivery address.';
+  }
+
   updatePricing();
 }
 
@@ -830,7 +831,6 @@ async function loadShippingRates() {
   dom.jntEtaEl.textContent = rates.jnt.eta || '';
   dom.lalamoveRateEl.textContent = formatPHP(rates.lalamove.rate);
   dom.lalamoveEtaEl.textContent = rates.lalamove.eta || '';
-  dom.pickupRateEl.textContent = CONFIG.PICKUP_RATE > 0 ? formatPHP(CONFIG.PICKUP_RATE) : 'Free';
   dom.rateNote.textContent =
     rates.jnt.estimated || rates.lalamove.estimated
       ? 'Rates shown are estimates. Final rate is confirmed at your delivery address.'
@@ -847,22 +847,6 @@ function handleContinueReview() {
    DETAILS
    ========================================================= */
 
-// Hides the address block and un-requires its inputs when Pickup is the
-// selected shipping method; restores them otherwise. Called every time the
-// details screen is entered, so it always reflects whatever was last chosen
-// back on the review screen.
-function updateAddressFieldsVisibility() {
-  const pickup = isPickupSelected();
-
-  dom.addressFields.classList.toggle('is-hidden', pickup);
-  dom.pickupDetailsNote.hidden = !pickup;
-
-  ADDRESS_FIELD_IDS.forEach((id) => {
-    const el = document.getElementById(id);
-    if (el) el.required = !pickup;
-  });
-}
-
 function collectFormData() {
   const f = new FormData(dom.detailsForm);
   return Object.fromEntries(f.entries());
@@ -878,16 +862,14 @@ function validateForm(d) {
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((d.email || '').trim())) {
     return 'Enter a valid email address.';
   }
-  if (!isPickupSelected()) {
-    if (
-      !d.addrStreet?.trim() ||
-      !d.addrBarangay?.trim() ||
-      !d.addrCity?.trim() ||
-      !d.addrProvince?.trim() ||
-      !d.addrZip?.trim()
-    ) {
-      return 'Fill in your full delivery address so your courier can find you.';
-    }
+  if (
+    !d.addrStreet?.trim() ||
+    !d.addrBarangay?.trim() ||
+    !d.addrCity?.trim() ||
+    !d.addrProvince?.trim() ||
+    !d.addrZip?.trim()
+  ) {
+    return 'Fill in your full delivery address so your courier can find you.';
   }
   return null;
 }
@@ -909,8 +891,9 @@ function handleDetailsSubmit(e) {
   const orderId = 'ORD-' + Date.now().toString(36).toUpperCase();
   const includedItems = getIncludedItems();
   const method = getShippingSelection();
-  const pickup = method === 'pickup';
-  const shippingRate = getShippingCost(method);
+  const shippingRate =
+    state.shippingRates?.[method]?.rate ??
+    (method === 'jnt' ? CONFIG.JNT_BASE_RATE : CONFIG.LALAMOVE_BASE_RATE);
   const subtotal = bundleSubtotal(includedItems.length);
 
   const specSummary = [...new Set(
@@ -930,7 +913,7 @@ function handleDetailsSubmit(e) {
     })),
     subtotal,
     shipping_method: method,
-    shipping_rush: false,
+    shipping_rush: dom.rushToggle.checked,
     shipping_rate: shippingRate,
     total: subtotal + shippingRate,
     first_name: data.firstName.trim(),
@@ -938,8 +921,7 @@ function handleDetailsSubmit(e) {
     phone: data.phone.trim(),
     email: data.email.trim(),
     messenger: (data.messenger || '').trim(),
-    // No delivery address for pickup orders — nothing was collected, so send null.
-    address: pickup ? null : {
+    address: {
       street: data.addrStreet.trim(),
       barangay: data.addrBarangay.trim(),
       city: data.addrCity.trim(),
@@ -1007,13 +989,9 @@ function populateDoneScreen(payload) {
   dom.doneOrderId.textContent = `Order #${state.orderId}`;
   dom.doneMessengerCopy.textContent = payload.messenger ? ' and Messenger' : '';
 
-  const shippingLine = payload.shipping_method === 'pickup'
-    ? 'Pickup &middot; ready in 2&ndash;3 days &mdash; we\'ll email you'
-    : `${shippingLabel(payload.shipping_method)} to ${payload.address.city}, ${payload.address.province}`;
-
   dom.doneSummary.innerHTML = `
     <span>${payload.shirt_size} &middot; ${payload.designs.length} design${payload.designs.length !== 1 ? 's' : ''}</span>
-    <span>${shippingLine}</span>
+    <span>${payload.shipping_method === 'jnt' ? 'J&T Express' : 'Lalamove'}${payload.shipping_rush ? ' · Rush' : ''} to ${payload.address.city}, ${payload.address.province}</span>
     <span>Total: ${formatPHP(payload.total)}</span>
   `;
 }
@@ -1029,11 +1007,7 @@ function handleRestart() {
   dom.continueBuildBtn.textContent = 'Choose your designs';
 
   dom.detailsForm.reset();
-  const jntRadio = $('input[value="jnt"]', dom.shipOptions);
-  if (jntRadio) jntRadio.checked = true;
-  updateShippingVisibility();
-  updateAddressFieldsVisibility();
-
+  dom.rushToggle.checked = false;
   dom.cartStrip.innerHTML = '';
   dom.libraryGrid.innerHTML = '';
 
@@ -1133,10 +1107,12 @@ function registerAllListeners() {
   dom.cartStrip.addEventListener('click', handleCartStripClick);
   dom.reviewBtn.addEventListener('click', handleReviewClick);
 
+  dom.carouselStage.addEventListener('change', handleCarouselChange);
   dom.prevBtn.addEventListener('click', handlePrevBtn);
   dom.nextBtn.addEventListener('click', handleNextBtn);
 
   dom.shipOptions.addEventListener('change', handleShippingChange);
+  dom.rushToggle.addEventListener('change', handleRushToggle);
   dom.continueReviewBtn.addEventListener('click', handleContinueReview);
 
   dom.detailsForm.addEventListener('submit', handleDetailsSubmit);
@@ -1156,7 +1132,7 @@ function init() {
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   window.addEventListener('load', () => {
     const wait = reduceMotion ? 150 : CONFIG.MIN_LOADER_MS;
-    if (dom.loader) setTimeout(() => dom.loader.classList.add('is-hidden'), wait);
+    setTimeout(() => dom.loader.classList.add('is-hidden'), wait);
   });
 
   goTo('home');
