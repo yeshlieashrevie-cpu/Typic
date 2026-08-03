@@ -228,7 +228,7 @@
       </div>
 
       <div class="cell cell--full">
-        <div class="rush-row">
+        <div class="rush-row" id="rushRow">
           <div>
             <p class="field-label" style="margin-bottom:2px">Delivery speed</p>
             <p class="field-hint" style="margin:0">Choose a courier, or switch on rush.</p>
@@ -255,8 +255,22 @@
             </span>
             <span class="ship-eta" id="lalamoveEta">Rush · same day, Metro Manila</span>
           </label>
+          <label class="ship-card" data-courier="pickup">
+            <input type="radio" name="shipping" value="pickup">
+            <span class="ship-card-top">
+              <span class="ship-courier">Pickup</span>
+              <span class="ship-rate" id="pickupRate">Free</span>
+            </span>
+            <span class="ship-eta">No courier &middot; collect it yourself</span>
+          </label>
         </div>
         <p class="field-hint" id="rateNote">Rates shown are estimates. Final rate is confirmed at your delivery address.</p>
+        <div class="pickup-note" id="pickupNote" hidden>
+          <span class="pickup-note-icon" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 7v5l3 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/></svg>
+          </span>
+          <p>Pickup orders are usually ready within <strong>2&ndash;3 days max</strong>. We'll email you the moment it's ready to collect &mdash; check your inbox (and Messenger, if you gave us one) from time to time.</p>
+        </div>
       </div>
 
       <div class="cell cell--full total-card">
