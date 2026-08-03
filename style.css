@@ -236,19 +236,18 @@ button{
 .brand{
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  padding: 4px 6px;
+  justify-content: center;
+  min-width: 0;
+  padding: 5px 8px;
   border-radius: var(--r-pill);
   flex-shrink: 0;
 }
 
 .brand-mark{
   display: block;
-  width: 84px;
-  height: 22px;
-  background: var(--gradient-primary);
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 44'%3E%3Ctext x='0' y='34' font-family='Helvetica,Arial,sans-serif' font-size='38' font-weight='700' letter-spacing='2'%3ETYPIC%3C/text%3E%3C/svg%3E") left center / contain no-repeat;
-  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 44'%3E%3Ctext x='0' y='34' font-family='Helvetica,Arial,sans-serif' font-size='38' font-weight='700' letter-spacing='2'%3ETYPIC%3C/text%3E%3C/svg%3E") left center / contain no-repeat;
+  width: clamp(88px, 22vw, 132px);
+  height: clamp(30px, 7vw, 42px);
+  background: url("logo.png") left center / contain no-repeat;
   transition: filter var(--dur) var(--ease);
 }
 .brand:hover .brand-mark{ filter: brightness(1.15) saturate(1.1); }
@@ -747,6 +746,7 @@ textarea.input{ resize: vertical; min-height: 96px; }
 }
 
 .chip{
+  position: relative;
   min-width: 56px;
   padding: 11px 16px;
   border-radius: var(--r-pill);
@@ -763,8 +763,8 @@ textarea.input{ resize: vertical; min-height: 96px; }
 .chip.active{
   color: #14060A;
   background: var(--gradient-primary);
-  border-color: transparent;
-  box-shadow: 0 12px 26px -12px rgba(255,68,35,0.62), inset 0 1px 0 rgba(255,255,255,0.45);
+  border-color: rgba(255,255,255,0.42);
+  box-shadow: 0 12px 26px -12px rgba(255,68,35,0.62), inset 0 1px 0 rgba(255,255,255,0.56), inset 0 -1px 0 rgba(105,20,8,0.34), 0 0 0 1px rgba(255,138,30,0.46);
 }
 
 /* Colour picker */
@@ -827,17 +827,19 @@ textarea.input{ resize: vertical; min-height: 96px; }
   border-radius: 50%;
   border: 1.5px solid rgba(255,255,255,0.4);
   background: rgba(0,0,0,0.22);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.24), inset 0 -1px 0 rgba(0,0,0,0.42);
   transition: background 0.25s var(--ease-soft), border-color 0.25s var(--ease-soft), transform 0.3s var(--ease);
 }
 .swatch-card--cream .pick-check{ border-color: rgba(0,0,0,0.28); background: rgba(255,255,255,0.5); }
 
 .swatch-card--pick.is-selected{
-  border-color: transparent;
-  box-shadow: 0 0 0 2px var(--glow-3), 0 20px 40px -18px rgba(255,138,30,0.6), var(--edge-top);
+  border-color: rgba(255,255,255,0.34);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.48), inset 0 -1px 0 rgba(0,0,0,0.34), 0 0 0 2px var(--glow-3), 0 20px 40px -18px rgba(255,138,30,0.6);
 }
 .swatch-card--pick.is-selected .pick-check{
-  border-color: transparent;
+  border-color: rgba(255,255,255,0.5);
   background: var(--gradient-primary);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.58), inset 0 -1px 0 rgba(105,20,8,0.36), 0 6px 14px -7px rgba(255,68,35,0.9);
   transform: scale(1.06);
 }
 .swatch-card--pick.is-selected .pick-check::after{
@@ -964,7 +966,8 @@ textarea.input{ resize: vertical; min-height: 96px; }
 .library-grid{
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
+  gap: 14px;
+  padding-inline: 4px;
   padding-bottom: 150px;
 }
 
@@ -973,6 +976,7 @@ textarea.input{ resize: vertical; min-height: 96px; }
   aspect-ratio: 4 / 5;
   border-radius: var(--r-md);
   overflow: hidden;
+  padding: clamp(12px, 4.5%, 20px);
   background: var(--glass-fill);
   border: 1px solid var(--glass-border);
   box-shadow: var(--edge-top), var(--edge-bottom), var(--shadow-soft);
@@ -984,11 +988,12 @@ textarea.input{ resize: vertical; min-height: 96px; }
 .design-img{
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  object-position: center;
   transition: transform 0.55s var(--ease);
 }
 .design-card:hover{ transform: translateY(-3px); border-color: var(--glass-border-lit); }
-.design-card:hover img{ transform: scale(1.035); }
+.design-card:hover img{ transform: scale(1.018); }
 .design-card:active{ transform: scale(0.985); }
 
 .design-card-add{
@@ -1047,9 +1052,9 @@ textarea.input{ resize: vertical; min-height: 96px; }
 .cart-dock{
   position: fixed;
   left: 50%;
-  bottom: 16px;
+  bottom: max(16px, env(safe-area-inset-bottom));
   transform: translateX(-50%);
-  z-index: 55;
+  z-index: 100;
   width: min(calc(100% - (var(--gutter) * 2)), var(--container-w));
   display: grid;
   gap: 12px;
@@ -1296,46 +1301,7 @@ textarea.input{ resize: vertical; min-height: 96px; }
 }
 .summary-row--total span:last-child{ font-family: var(--font-mono); }
 
-/* Rush + shipping */
-.rush-row{
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: center;
-  gap: 16px;
-  margin-bottom: 14px;
-}
-.rush-row[hidden]{ display: none; }
-
-.switch{ position: relative; display: inline-flex; flex-shrink: 0; cursor: pointer; }
-.switch input{ position: absolute; opacity: 0; width: 0; height: 0; }
-
-.switch-track{
-  display: block;
-  width: 50px;
-  height: 29px;
-  padding: 3px;
-  border-radius: var(--r-pill);
-  background: rgba(255,255,255,0.09);
-  border: 1px solid var(--glass-border);
-  box-shadow: inset 0 2px 6px rgba(0,0,0,0.55);
-  transition: background 0.3s var(--ease-soft), box-shadow 0.3s var(--ease);
-}
-.switch-thumb{
-  display: block;
-  width: 21px;
-  height: 21px;
-  border-radius: 50%;
-  background: #F4F4F6;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.6);
-  transition: transform 0.34s var(--ease), background 0.3s var(--ease-soft);
-}
-.switch input:checked + .switch-track{
-  background: var(--gradient-primary);
-  border-color: transparent;
-  box-shadow: 0 8px 20px -10px rgba(255,68,35,0.75), inset 0 1px 0 rgba(255,255,255,0.4);
-}
-.switch input:checked + .switch-track .switch-thumb{ transform: translateX(21px); background: #fff; }
-
+/* Shipping, including free in-person pickup */
 .ship-options{ display: grid; gap: 8px; }
 
 .ship-card{
@@ -1800,6 +1766,7 @@ textarea.input{ resize: vertical; min-height: 96px; }
   :root{ --container-w: 700px; --gutter: 28px; }
   .bento{ gap: 16px; }
   .library-grid{ grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+  .brand-mark{ width: 124px; height: 40px; }
   .home-bento .cell--mini{ grid-column: span 1; }
   .fabric-teaser{ padding: 30px 28px; }
   .sheet{ border-radius: var(--r-xl); bottom: 40px; }
