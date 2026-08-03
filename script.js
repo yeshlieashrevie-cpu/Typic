@@ -158,13 +158,6 @@ function updateCartItemPersonalize(designId, personalize) {
   }
 }
 
-function updateCartItemIncluded(designId, included) {
-  const item = state.cart.find((i) => i.designId === designId);
-  if (item) {
-    item.included = included;
-  }
-}
-
 function resetState() {
   state.pendingShirt = { size: null, color: null };
   state.libraryMode = null;
@@ -719,9 +712,6 @@ function renderCarouselSlide() {
   const controls = document.createElement('div');
   controls.className = 'slide-controls';
   controls.innerHTML = `
-    <label class="slide-checkbox">
-      <input type="checkbox" id="includeCheckbox" ${item.included ? 'checked' : ''} aria-label="Include this design in my order">
-    </label>
     <span class="slide-price">${priceLabel}</span>
   `;
   slide.appendChild(controls);
@@ -746,15 +736,6 @@ function renderDots() {
     dot.className = 'dot' + (i === state.reviewIndex ? ' active' : '');
     dom.carouselDots.appendChild(dot);
   });
-}
-
-function handleCarouselChange(e) {
-  if (e.target.id !== 'includeCheckbox') return;
-  const item = state.cart[state.reviewIndex];
-  if (item) {
-    updateCartItemIncluded(item.designId, e.target.checked);
-  }
-  renderSummary();
 }
 
 function handlePrevBtn() {
@@ -1152,7 +1133,6 @@ function registerAllListeners() {
   dom.cartStrip.addEventListener('click', handleCartStripClick);
   dom.reviewBtn.addEventListener('click', handleReviewClick);
 
-  dom.carouselStage.addEventListener('change', handleCarouselChange);
   dom.prevBtn.addEventListener('click', handlePrevBtn);
   dom.nextBtn.addEventListener('click', handleNextBtn);
 
